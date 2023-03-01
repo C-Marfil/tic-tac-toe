@@ -1,0 +1,13 @@
+main {
+    flex: 1;
+    display: grid;
+    place-content: center;
+  }
+  
+  .main-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: var(--secondary-color);
+    gap: 0.5rem;
+  }

@@ -2,12 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import "../styles/gamecolumn.css";
 
-const GameColumn = ({ col }) => {
-  console.log(col);
+const GameColumn = ({ col, idx, onClick }) => {
   return (
-    <div className="column">
-      {col.map((cell) => {
-        return <span className="cell">{cell}</span>;
+    <div className="column" key={idx} onClick={onClick}>
+      {col.map((cell, x) => {
+        return (
+          <span className="cell" key={`cell-${idx}-${x}`}>
+            {cell}
+          </span>
+        );
       })}
     </div>
   );

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
-import { useNavigate } from "react-router-dom";
+import ConnectFourGame from "./Connect4";
+import ReadyEmoji from "./ReadyEmoji";
 
 const Chat = ({ room, setRoom }) => {
   const [message, setMessage] = useState("");
@@ -17,7 +19,6 @@ const Chat = ({ room, setRoom }) => {
   const handleJoinRoom = () => {
     if (room !== "") {
       socket.emit("join_room", room);
-      console.log(room);
       navigate(`/room${room}`);
     }
   };
@@ -47,6 +48,8 @@ const Chat = ({ room, setRoom }) => {
           setMessage(event.target.value);
         }}
       />
+      <ConnectFourGame />
+      <ReadyEmoji room={room} />
       <h2>{messageReceived}</h2>
       <button type="button" onClick={handleSendMessage}>
         Send Message

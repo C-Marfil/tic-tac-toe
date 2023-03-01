@@ -1,10 +1,16 @@
 .column {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     border: 1px solid black;
+    justify-items: center;
     padding: 10px;
 }
 
 .cell {
-    border: 1px solid green;
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 30px;
 }
