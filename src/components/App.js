@@ -1,22 +1,35 @@
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+/* eslint-disable no-console */
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import "../styles/app.css";
-import Chat from "./Chat";
-import Room from "./Room";
-import Home from "./Home";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
+import Footer from "./Footer/Footer";
+import JoinRoomModal from "./JoinRoomModal/JoinRoomModal";
+
+const socket = io.connect("http://localhost:5000");
 
 const App = () => {
-  const [room, setRoom] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [roomCode, setRoomCode] = useState(null);
+
+  useEffect(() => {
+    console.log(roomCode);
+    if (roomCode) {
+      socket.emit("joinRoom", roomCode);
+    }
+  }, [roomCode]);
 
   return (
-    <div>
-      <Chat room={room} setRoom={setRoom} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path={`/room${room}`} element={<Room />} />
-      </Routes>
-    </div>
+    <>
+      <JoinRoomModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setRoomCode={setRoomCode}
+      />
+      <Header />
+      <Main socket={socket} roomCode={roomCode} />
+      <Footer setShowModal={setShowModal} />
+    </>
   );
 };
 
