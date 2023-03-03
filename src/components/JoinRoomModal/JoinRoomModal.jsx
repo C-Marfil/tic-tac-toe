@@ -63,8 +63,9 @@ const JoinRoomModal = ({ showModal, setShowModal, setRoomCode }) => {
 };
 
 JoinRoomModal.propTypes = {
-  showModal: PropTypes.func.isRequired,
+  showModal: PropTypes.bool.isRequired,
   setShowModal: PropTypes.func.isRequired,
   setRoomCode: PropTypes.func.isRequired,
 };
+
 export default JoinRoomModal;

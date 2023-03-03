@@ -17,6 +17,11 @@ io.on("connection", (socket) => {
     socket.broadcast.to(roomCode).emit("updateGame", id);
   });
 
+  socket.on("send_message", (data) => {
+    socket.to(data.roomCode).emit("receive_message", data);
+    console.log(data.message);
+})
+
   socket.on("disconnect", () => {
     console.log("User Disconnected");
   });

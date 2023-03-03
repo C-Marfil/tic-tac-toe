@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Cell from "../Cell/Cell";
 import "./main.css";
+import Chat from "../Chat/Chat";
 
 const Main = ({ socket, roomCode }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -36,6 +37,9 @@ const Main = ({ socket, roomCode }) => {
 
   return (
     <main>
+      <div>
+        {roomCode !== null && <Chat roomCode={roomCode} socket={socket} />}
+      </div>
       <section className="main-section">
         <Cell handleCellClick={handleCellClick} id="0" text={board[0]} />
         <Cell handleCellClick={handleCellClick} id="1" text={board[1]} />
@@ -53,10 +57,12 @@ const Main = ({ socket, roomCode }) => {
   );
 };
 
+Main.defaultProps = {
+  roomCode: null,
+};
+
 Main.propTypes = {
-  socket: PropTypes.func.isRequired,
-  roomCode: PropTypes.string.isRequired,
-  on: PropTypes.func.isRequired,
-  off: PropTypes.func.isRequired,
+  socket: PropTypes.object.isRequired,
+  roomCode: PropTypes.string,
 };
 export default Main;

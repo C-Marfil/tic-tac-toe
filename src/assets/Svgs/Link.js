@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./Svg.css";
 import { motion, useAnimation } from "framer-motion";
 
@@ -66,12 +67,7 @@ const LinkSvg = ({ setShowModal }) => {
       whileTap="tap"
       className="svg"
     >
-      <svg
-        whileHover={{ scale: 1.2 }}
-        whileTap={{ scale: 0.8 }}
-        xmlns="http://www.w3.org/2000/motion."
-        viewBox="0 0 24 24"
-      >
+      <svg xmlns="http://www.w3.org/2000/motion." viewBox="0 0 24 24">
         <motion.path
           variants={pathVariants}
           animate={controls}
@@ -87,6 +83,10 @@ const LinkSvg = ({ setShowModal }) => {
       </svg>
     </motion.div>
   );
+};
+
+LinkSvg.propTypes = {
+  setShowModal: PropTypes.func.isRequired,
 };
 
 export default LinkSvg;
