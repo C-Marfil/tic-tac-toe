@@ -1,13 +1,26 @@
+
+
 main {
-    flex: 1;
-    display: grid;
-    place-content: center;
-  }
-  
-  .main-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    background-color: var(--secondary-color);
-    gap: 0.5rem;
-  }
+  display: grid;
+  place-content: center;
+}
+
+.main-section {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  background-color: var(--secondary-color);
+  gap: 0.5rem;
+  border: 1px black solid;
+  background-color: blue;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 3px;
+  padding-bottom: 10px;
+}
+
+.cell {
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 50%;
+}
