@@ -8,6 +8,7 @@ import Chat from "../Chat/Chat";
 const Main = ({ socket, roomCode }) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [canPlay, setCanPlay] = useState(true);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     socket.on("updateGame", (id) => {
@@ -38,7 +39,14 @@ const Main = ({ socket, roomCode }) => {
   return (
     <main>
       <div>
-        {roomCode !== null && <Chat roomCode={roomCode} socket={socket} />}
+        {roomCode !== null && (
+          <Chat
+            roomCode={roomCode}
+            username={username}
+            setUsername={setUsername}
+            socket={socket}
+          />
+        )}
       </div>
       <section className="main-section">
         <Cell handleCellClick={handleCellClick} id="0" text={board[0]} />
