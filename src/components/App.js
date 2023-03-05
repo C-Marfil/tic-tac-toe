@@ -9,7 +9,6 @@ import JoinRoomModal from "./JoinRoomModal/JoinRoomModal";
 const socket = io.connect("http://localhost:5000");
 
 const App = () => {
-  const [showModal, setShowModal] = useState(false);
   const [roomCode, setRoomCode] = useState(null);
 
   useEffect(() => {
@@ -21,14 +20,9 @@ const App = () => {
 
   return (
     <>
-      <JoinRoomModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setRoomCode={setRoomCode}
-      />
+      <JoinRoomModal socket={socket} setRoomCode={setRoomCode} />
       <Header />
       <Main socket={socket} roomCode={roomCode} />
-      <Footer setShowModal={setShowModal} />
     </>
   );
 };

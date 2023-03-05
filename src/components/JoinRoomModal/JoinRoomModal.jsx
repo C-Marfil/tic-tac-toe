@@ -1,70 +1,73 @@
-import React, { useState } from "react";
+/* eslint-disable no-alert */
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import "./JoinRoomModal.css";
-import { motion } from "framer-motion";
 
-const backgrop = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
-
-const modal = {
-  hidden: {
-    y: "-100vh",
-    opacity: 0,
-  },
-
-  visible: {
-    y: "00px",
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-    },
-  },
-};
-
-const JoinRoomModal = ({ showModal, setShowModal, setRoomCode }) => {
+const JoinRoomModal = ({ setRoomCode, socket }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
-  const handleSave = () => {
-    setShowModal(false);
+  const [rooms, setRooms] = useState([]);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (roomCodeInput === null) {
+      alert("Please select or create a room");
+    }
     setRoomCode(roomCodeInput);
+    setRooms([...rooms, roomCodeInput]);
+    socket.emit("update-rooms", [...rooms, roomCodeInput]);
   };
+
+  socket.on("rooms-incoming", (data) => {
+    console.log(data);
+    setRooms(data);
+  });
+
+  const handleRoomClick = (event) => {
+    setRoomCodeInput(event.target.id);
+    console.log(event.target.id);
+  };
+
+  useEffect(() => {
+    setRoomCode(roomCodeInput);
+  }, [roomCodeInput]);
 
   return (
     <div>
-      {showModal && (
-        <motion.div
-          className="joinRoomModal-container"
-          variants={backgrop}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
+      <form>
+        <h1 className="joinRoomModal-card-title">Enter a room code</h1>
+        <input
+          className="joinRoomModal-card-input"
+          type="number"
+          placeholder="eg: 1212"
+          onChange={(e) => setRoomCodeInput(e.target.value)}
+        />
+        <button
+          type="submit"
+          onClick={(e) => handleSave(e)}
+          className="joinRoomModal-card-button"
         >
-          <motion.div className="joinRoomModal-card" variants={modal}>
-            <h1 className="joinRoomModal-card-title">Enter a room code</h1>
-            <input
-              className="joinRoomModal-card-input"
-              type="number"
-              placeholder="eg: 1212"
-              onChange={(e) => setRoomCodeInput(e.target.value)}
-            />
+          Save
+        </button>
+      </form>
+      <div>
+        {rooms.map((room) => {
+          return (
             <button
               type="button"
-              onClick={handleSave}
-              className="joinRoomModal-card-button"
+              id={room}
+              onClick={(e) => {
+                handleRoomClick(e);
+              }}
             >
-              Save
+              Join room {room}
             </button>
-          </motion.div>
-        </motion.div>
-      )}
+          )
+        })}
+      </div>
     </div>
   );
 };
 
 JoinRoomModal.propTypes = {
-  showModal: PropTypes.bool.isRequired,
-  setShowModal: PropTypes.func.isRequired,
   setRoomCode: PropTypes.func.isRequired,
 };
 

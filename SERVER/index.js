@@ -12,14 +12,19 @@ io.on("connection", (socket) => {
     socket.join(roomCode);
   });
 
-  socket.on("play", ({ id, roomCode }) => {
-    console.log(`play at ${id} to ${roomCode}`);
-    socket.broadcast.to(roomCode).emit("updateGame", id);
+  socket.on("play", ({ id, column, roomCode }) => {
+    console.log(`play at column ${column}, tile ${id} at ${roomCode}`);
+    socket.broadcast.to(roomCode).emit("updateGame", column, id);
   });
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
   });
+
+  socket.on("update-rooms", (data) => {
+    console.log(data);
+    socket.broadcast.emit("rooms-incoming", data);
+  })
 
   socket.on("disconnect", () => {
     console.log("User Disconnected");
