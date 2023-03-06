@@ -1,10 +1,12 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const JoinRoomModal = ({ setRoomCode, socket }) => {
+const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
   const [rooms, setRooms] = useState([]);
+  const navigate = useNavigate();
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -17,18 +19,18 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
   };
 
   socket.on("rooms-incoming", (data) => {
-    console.log(data);
     setRooms(data);
   });
 
   const handleRoomClick = (event) => {
     setRoomCodeInput(event.target.id);
+    navigate(`/room${roomCode}`);
     console.log(event.target.id);
   };
 
   useEffect(() => {
     setRoomCode(roomCodeInput);
-  }, [roomCodeInput]);
+  }, [roomCodeInput, setRoomCode]);
 
   return (
     <div>
@@ -60,7 +62,7 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
             >
               Join room {room}
             </button>
-          )
+          );
         })}
       </div>
     </div>
