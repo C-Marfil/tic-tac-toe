@@ -6,7 +6,6 @@ import "./chat.css";
 const Chat = ({ socket, roomCode, username, setUsername }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  const [usernameChosen, setUsernameChosen] = useState(false);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -30,30 +29,6 @@ const Chat = ({ socket, roomCode, username, setUsername }) => {
     });
   }, [socket]);
 
-  if (!usernameChosen) {
-    return (
-      <div>
-        <div className="joinChatContainer">
-          <h3>Join the Conversation</h3>
-          <input
-            type="text"
-            placeholder="Username..."
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              setUsernameChosen(true);
-            }}
-          >
-            👍
-          </button>
-        </div>
-      </div>
-    );
-  }
   return (
     <div className="chat-window">
       <div className="chat-header">

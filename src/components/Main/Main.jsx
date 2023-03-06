@@ -6,7 +6,7 @@ import Cell from "../Cell/Cell";
 import "./main.css";
 import Chat from "../Chat/Chat";
 
-const Main = ({ socket, roomCode }) => {
+const Main = ({ socket, roomCode, username, setUsername }) => {
   const rowOne = ["", "", "", "", "", "", ""];
   const rowTwo = ["", "", "", "", "", "", ""];
   const rowThree = ["", "", "", "", "", "", ""];
@@ -23,7 +23,6 @@ const Main = ({ socket, roomCode }) => {
     rowSix,
   ]);
   const [canPlay, setCanPlay] = useState(true);
-  const [username, setUsername] = useState("");
 
   useEffect(() => {
     socket.on("updateGame", (id) => {
@@ -122,6 +121,8 @@ Main.defaultProps = {
 };
 
 Main.propTypes = {
+  username: PropTypes.string.isRequired,
+  setUsername: PropTypes.func.isRequired,
   socket: PropTypes.object.isRequired,
   roomCode: PropTypes.string,
 };
