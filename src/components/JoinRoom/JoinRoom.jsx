@@ -16,6 +16,7 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
     setRoomCode(roomCodeInput);
     setRooms([...rooms, roomCodeInput]);
     socket.emit("update-rooms", [...rooms, roomCodeInput]);
+    navigate(`/room${roomCodeInput}`);
   };
 
   socket.on("rooms-incoming", (data) => {
@@ -23,14 +24,14 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   });
 
   const handleRoomClick = (event) => {
-    setRoomCodeInput(event.target.id);
-    navigate(`/room${roomCode}`);
-    console.log(event.target.id);
+    setRoomCode(event.target.id);
+    navigate(`/room${event.target.id}`);
+    console.log(event.target.id, "<----- event.target.id");
   };
 
   useEffect(() => {
     setRoomCode(roomCodeInput);
-  }, [roomCodeInput, setRoomCode]);
+  }, [setRoomCode]);
 
   return (
     <div>
@@ -39,6 +40,7 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
         <input
           className="joinRoomModal-card-input"
           type="number"
+          value={roomCodeInput}
           placeholder="eg: 1212"
           onChange={(e) => setRoomCodeInput(e.target.value)}
         />

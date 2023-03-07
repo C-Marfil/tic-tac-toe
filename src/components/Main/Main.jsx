@@ -53,13 +53,8 @@ const Main = ({ socket, roomCode, username, setUsername }) => {
   return (
     <main>
       <div>
-        {roomCode !== null && (
-          <Chat
-            roomCode={roomCode}
-            username={username}
-            setUsername={setUsername}
-            socket={socket}
-          />
+        {username !== "" && (
+          <Chat roomCode={roomCode} username={username} socket={socket} />
         )}
       </div>
       <section className="main-section">
