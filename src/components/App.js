@@ -32,13 +32,7 @@ const App = () => {
         {username && (
           <Route
             path="/lobby"
-            element={
-              <JoinRoom
-                socket={socket}
-                setRoomCode={setRoomCode}
-                roomCode={roomCode}
-              />
-            }
+            element={<JoinRoom socket={socket} setRoomCode={setRoomCode} />}
           />
         )}
 

@@ -6,7 +6,7 @@ import Cell from "../Cell/Cell";
 import "./main.css";
 import Chat from "../Chat/Chat";
 
-const Main = ({ socket, roomCode, username, setUsername }) => {
+const Main = ({ socket, roomCode, username }) => {
   const rowOne = ["", "", "", "", "", "", ""];
   const rowTwo = ["", "", "", "", "", "", ""];
   const rowThree = ["", "", "", "", "", "", ""];
@@ -53,13 +53,8 @@ const Main = ({ socket, roomCode, username, setUsername }) => {
   return (
     <main>
       <div>
-        {roomCode !== null && (
-          <Chat
-            roomCode={roomCode}
-            username={username}
-            setUsername={setUsername}
-            socket={socket}
-          />
+        {username !== "" && (
+          <Chat roomCode={roomCode} username={username} socket={socket} />
         )}
       </div>
       <section className="main-section">

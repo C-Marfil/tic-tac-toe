@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
+const JoinRoomModal = ({ setRoomCode, socket }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
     setRoomCode(roomCodeInput);
     setRooms([...rooms, roomCodeInput]);
     socket.emit("update-rooms", [...rooms, roomCodeInput]);
+    navigate(`/room${roomCodeInput}`);
   };
 
   socket.on("rooms-incoming", (data) => {
@@ -23,14 +25,14 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   });
 
   const handleRoomClick = (event) => {
-    setRoomCodeInput(event.target.id);
-    navigate(`/room${roomCode}`);
-    console.log(event.target.id);
+    setRoomCode(event.target.id);
+    navigate(`/room${event.target.id}`);
+    console.log(event.target.id, "<----- event.target.id");
   };
 
   useEffect(() => {
     setRoomCode(roomCodeInput);
-  }, [roomCodeInput, setRoomCode]);
+  }, [setRoomCode]);
 
   return (
     <div>
@@ -39,6 +41,7 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
         <input
           className="joinRoomModal-card-input"
           type="number"
+          value={roomCodeInput}
           placeholder="eg: 1212"
           onChange={(e) => setRoomCodeInput(e.target.value)}
         />
