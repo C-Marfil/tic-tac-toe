@@ -6,28 +6,25 @@ import Cell from "../Cell/Cell";
 import "./main.css";
 import Chat from "../Chat/Chat";
 
-const Main = ({ socket, roomCode, username }) => {
-  const rowOne = ["", "", "", "", "", "", ""];
-  const rowTwo = ["", "", "", "", "", "", ""];
-  const rowThree = ["", "", "", "", "", "", ""];
-  const rowFour = ["", "", "", "", "", "", ""];
-  const rowFive = ["", "", "", "", "", "", ""];
-  const rowSix = ["", "", "", "", "", "", ""];
-
-  const [board, setBoard] = useState([
-    rowOne,
-    rowTwo,
-    rowThree,
-    rowFour,
-    rowFive,
-    rowSix,
-  ]);
+const Main = ({ socket, roomCode }) => {
+  const [board, setBoard] = useState({
+    column1: ["", "", "", ""],
+    column2: ["", "", "", ""],
+    column3: ["", "", "", ""],
+    column4: ["", "", "", ""],
+  });
   const [canPlay, setCanPlay] = useState(true);
+  const [username, setUsername] = useState("");
+  const updatedBoard = board;
 
   useEffect(() => {
-    socket.on("updateGame", (id) => {
-      console.log("use Effect", id);
-      setBoard((data) => ({ ...data, [id]: "O" }));
+    socket.on("updateGame", ({ id }) => {
+      console.log("this is id", id);
+      const column = id.split(".")[1].split("[")[0];
+      const position = id.split(".")[1].split("[")[1][0];
+      updatedBoard[column][position] = "O";
+      console.log("this is the Rival Board", updatedBoard);
+      setBoard(updatedBoard);
       setCanPlay(true);
     });
 
@@ -36,9 +33,14 @@ const Main = ({ socket, roomCode, username }) => {
 
   const handleCellClick = (e) => {
     const { id } = e.currentTarget;
-    if (canPlay && board[id] === "") {
-      setBoard((data) => ({ ...data, [id]: "X" }));
-      socket.emit("play", { id, roomCode });
+    const column = id.split(".")[1].split("[")[0];
+    const position = id.split(".")[1].split("[")[1][0];
+
+    if (canPlay && updatedBoard[column][position] === "") {
+      updatedBoard[column][position] = "X";
+      console.log("move made by player", updatedBoard);
+      setBoard(updatedBoard);
+      socket.emit("play", { id, column, position, roomCode });
       setCanPlay(false);
     }
 
@@ -46,66 +48,111 @@ const Main = ({ socket, roomCode, username }) => {
       (board[0] === "X" && board[1] === "X" && board[2] === "X") ||
       (board[0] === "O" && board[1] === "O" && board[2] === "O")
     ) {
-      setBoard([rowOne, rowTwo, rowThree, rowFour, rowFive, rowSix]);
+      setBoard({
+        column1: ["", "", "", ""],
+        column2: ["", "", "", ""],
+        column3: ["", "", "", ""],
+        column4: ["", "", "", ""],
+      });
     }
   };
 
   return (
     <main>
       <div>
-        {username !== "" && (
-          <Chat roomCode={roomCode} username={username} socket={socket} />
+        {roomCode !== null && (
+          <Chat
+            roomCode={roomCode}
+            username={username}
+            setUsername={setUsername}
+            socket={socket}
+          />
         )}
       </div>
       <section className="main-section">
-        <Cell handleCellClick={handleCellClick} id="0" text={board[0]} />
-        <Cell handleCellClick={handleCellClick} id="1" text={board[1]} />
-        <Cell handleCellClick={handleCellClick} id="2" text={board[2]} />
-        <Cell handleCellClick={handleCellClick} id="3" text={board[3]} />
-        <Cell handleCellClick={handleCellClick} id="4" text={board[4]} />
-        <Cell handleCellClick={handleCellClick} id="5" text={board[5]} />
-        <Cell handleCellClick={handleCellClick} id="6" text={board[6]} />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column1[0]"
+          text={board.column1[0]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column1[1]"
+          text={board.column1[1]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column1[2]"
+          text={board.column1[2]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column1[3]"
+          text={board.column1[3]}
+        />
 
-        <Cell handleCellClick={handleCellClick} id="7" text={board[1][0]} />
-        <Cell handleCellClick={handleCellClick} id="8" text={board[8]} />
-        <Cell handleCellClick={handleCellClick} id="9" text={board[9]} />
-        <Cell handleCellClick={handleCellClick} id="10" text={board[10]} />
-        <Cell handleCellClick={handleCellClick} id="11" text={board[11]} />
-        <Cell handleCellClick={handleCellClick} id="12" text={board[12]} />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column2[0]"
+          text={board.column2[0]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column2[1]"
+          text={board.column2[1]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column2[2]"
+          text={board.column2[2]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column2[3]"
+          text={board.column2[3]}
+        />
 
-        <Cell handleCellClick={handleCellClick} id="13" text={board[13]} />
-        <Cell handleCellClick={handleCellClick} id="14" text={board[14]} />
-        <Cell handleCellClick={handleCellClick} id="15" text={board[15]} />
-        <Cell handleCellClick={handleCellClick} id="16" text={board[16]} />
-        <Cell handleCellClick={handleCellClick} id="17" text={board[17]} />
-        <Cell handleCellClick={handleCellClick} id="18" text={board[18]} />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column3[0]"
+          text={board.column3[0]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column3[1]"
+          text={board.column3[1]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column3[2]"
+          text={board.column3[2]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column3[3]"
+          text={board.column3[3]}
+        />
 
-        <Cell handleCellClick={handleCellClick} id="19" text={board[19]} />
-        <Cell handleCellClick={handleCellClick} id="20" text={board[20]} />
-        <Cell handleCellClick={handleCellClick} id="21" text={board[21]} />
-        <Cell handleCellClick={handleCellClick} id="22" text={board[22]} />
-        <Cell handleCellClick={handleCellClick} id="23" text={board[23]} />
-        <Cell handleCellClick={handleCellClick} id="24" text={board[24]} />
-
-        <Cell handleCellClick={handleCellClick} id="25" text={board[25]} />
-        <Cell handleCellClick={handleCellClick} id="26" text={board[26]} />
-        <Cell handleCellClick={handleCellClick} id="27" text={board[27]} />
-        <Cell handleCellClick={handleCellClick} id="28" text={board[28]} />
-        <Cell handleCellClick={handleCellClick} id="29" text={board[29]} />
-        <Cell handleCellClick={handleCellClick} id="30" text={board[30]} />
-
-        <Cell handleCellClick={handleCellClick} id="31" text={board[31]} />
-        <Cell handleCellClick={handleCellClick} id="32" text={board[32]} />
-        <Cell handleCellClick={handleCellClick} id="33" text={board[33]} />
-        <Cell handleCellClick={handleCellClick} id="34" text={board[34]} />
-        <Cell handleCellClick={handleCellClick} id="35" text={board[35]} />
-        <Cell handleCellClick={handleCellClick} id="36" text={board[36]} />
-
-        <Cell handleCellClick={handleCellClick} id="37" text={board[37]} />
-        <Cell handleCellClick={handleCellClick} id="38" text={board[38]} />
-        <Cell handleCellClick={handleCellClick} id="39" text={board[39]} />
-        <Cell handleCellClick={handleCellClick} id="40" text={board[40]} />
-        <Cell handleCellClick={handleCellClick} id="41" text={board[41]} />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column4[0]"
+          text={board.column4[0]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column4[1]"
+          text={board.column4[1]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column4[2]"
+          text={board.column4[2]}
+        />
+        <Cell
+          handleCellClick={handleCellClick}
+          id="board.column4[3]"
+          text={board.column4[3]}
+        />
       </section>
     </main>
   );
@@ -116,8 +163,6 @@ Main.defaultProps = {
 };
 
 Main.propTypes = {
-  username: PropTypes.string.isRequired,
-  setUsername: PropTypes.func.isRequired,
   socket: PropTypes.object.isRequired,
   roomCode: PropTypes.string,
 };
