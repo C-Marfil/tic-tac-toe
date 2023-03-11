@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Cell from "../Cell/Cell";
 import "./main.css";
+import checkWin from "./helperWin";
 import Chat from "../Chat/Chat";
 
 const Main = ({ socket, roomCode }) => {
@@ -18,15 +19,19 @@ const Main = ({ socket, roomCode }) => {
   const updatedBoard = board;
 
   useEffect(() => {
-    socket.on("updateGame", (id) => {
-      console.log("this is id", id);
-      const column = id.split(".")[1].split("[")[0];
-      const position = id.split(".")[1].split("[")[1][0];
-      updatedBoard[column][position] = "O";
-      console.log("this is the Rival Board", updatedBoard);
-      setBoard(updatedBoard);
-      setCanPlay(true);
-    });
+    socket.on(
+      "updateGame",
+      (id) => {
+        console.log("this is id", id);
+        const column = id.split(".")[1].split("[")[0];
+        const position = id.split(".")[1].split("[")[1][0];
+        updatedBoard[column][position] = "🟡";
+        console.log("this is the Rival Board", updatedBoard);
+        setBoard(updatedBoard);
+        setCanPlay(true);
+      },
+      [updatedBoard, board]
+    );
 
     return () => socket.off("updateGame");
   });
@@ -37,23 +42,12 @@ const Main = ({ socket, roomCode }) => {
     const position = id.split(".")[1].split("[")[1][0];
 
     if (canPlay && updatedBoard[column][position] === "") {
-      updatedBoard[column][position] = "X";
+      updatedBoard[column][position] = "🔴";
       console.log("move made by player", updatedBoard);
       setBoard(updatedBoard);
       socket.emit("play", { id, column, position, roomCode });
       setCanPlay(false);
-    }
-
-    if (
-      (board[0] === "X" && board[1] === "X" && board[2] === "X") ||
-      (board[0] === "O" && board[1] === "O" && board[2] === "O")
-    ) {
-      setBoard({
-        column1: ["", "", "", ""],
-        column2: ["", "", "", ""],
-        column3: ["", "", "", ""],
-        column4: ["", "", "", ""],
-      });
+      checkWin(updatedBoard);
     }
   };
 
