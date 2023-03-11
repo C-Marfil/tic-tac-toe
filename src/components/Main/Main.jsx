@@ -18,7 +18,7 @@ const Main = ({ socket, roomCode }) => {
   const updatedBoard = board;
 
   useEffect(() => {
-    socket.on("updateGame", ({ id }) => {
+    socket.on("updateGame", (id) => {
       console.log("this is id", id);
       const column = id.split(".")[1].split("[")[0];
       const position = id.split(".")[1].split("[")[1][0];
@@ -73,17 +73,17 @@ const Main = ({ socket, roomCode }) => {
         <Cell
           handleCellClick={handleCellClick}
           id="board.column1[0]"
-          text={board.column1[0]}
+          text={updatedBoard.column1[0]}
         />
         <Cell
           handleCellClick={handleCellClick}
           id="board.column1[1]"
-          text={board.column1[1]}
+          text={updatedBoard.column1[1]}
         />
         <Cell
           handleCellClick={handleCellClick}
           id="board.column1[2]"
-          text={board.column1[2]}
+          text={updatedBoard.column1[2]}
         />
         <Cell
           handleCellClick={handleCellClick}
