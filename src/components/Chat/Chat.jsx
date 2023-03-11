@@ -3,7 +3,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import PropTypes from "prop-types";
 import "./chat.css";
 
-const Chat = ({ socket, roomCode, username, setUsername }) => {
+const Chat = ({ socket, roomCode, username }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 

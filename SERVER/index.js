@@ -12,9 +12,10 @@ io.on("connection", (socket) => {
     socket.join(roomCode);
   });
 
-  socket.on("play", ({ id, column, roomCode }) => {
-    console.log(`play at column ${column}, tile ${id} at ${roomCode}`);
-    socket.broadcast.to(roomCode).emit("updateGame", column, id);
+  socket.on("play", ({ id, roomCode }) => {
+    console.log(`play at column, tile at ${roomCode}`);
+    console.log("ID at SERVER", id);
+    socket.broadcast.to(roomCode).emit("updateGame", id);
   });
 
   socket.on("send_message", (data) => {
