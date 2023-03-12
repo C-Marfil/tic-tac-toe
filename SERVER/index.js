@@ -8,8 +8,13 @@ io.on("connection", (socket) => {
   console.log("User Connected");
 
   socket.on("joinRoom", (roomCode) => {
+    const room = io.sockets.adapter.rooms.get(roomCode);
     console.log(`A user joined the room ${roomCode}`);
     socket.join(roomCode);
+    const users = room ? room.size : 0;
+    console.log(`there are these many users connected to room ${roomCode}:`, users);
+    socket.emit("numberOfUsers", users, roomCode);
+
   });
 
   socket.on("play", ({ roomCode, column, position, id }) => {
