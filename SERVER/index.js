@@ -29,7 +29,8 @@ io.on("connection", (socket) => {
 
   socket.on("update-rooms", (data) => {
     console.log(data);
-    socket.broadcast.emit("rooms-incoming", data);
+    const currentOpenRooms = data;
+    socket.broadcast.emit("rooms-incoming", currentOpenRooms);
   })
 
   socket.on("disconnect", () => {

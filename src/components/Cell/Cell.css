@@ -1,9 +1,10 @@
 .cell {
-  height: 100px;
-  width: 100px;
+  height: 70px;
+  width: 75px;
   background: var(--primary-color);
   color: var(--secondary-color);
-  font-size: 4rem;
+  padding-top: 5px;
+  font-size: 4.9rem;
   display: grid;
   place-content: center;
 }

@@ -6,17 +6,16 @@ main {
 }
 
 .main-section {
-  rotate: -90deg;
+  /* rotate: -90deg; */
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(4, 1fr);
-  background-color: var(--secondary-color);
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 0.6rem;
   border: 1px black solid;
   background-color: blue;
   padding-right: 50px;
   padding-left: 50px;
-  padding-top: 7px;
+  padding-top: 15px;
   padding-bottom: 10px;
 }
 
