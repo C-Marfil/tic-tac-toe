@@ -48,7 +48,7 @@ const Main = ({ socket, roomCode }) => {
       updatedBoard[column][position] = "🔴";
       console.log("move made by player", updatedBoard);
       setBoard(updatedBoard);
-      socket.emit("play", { id, column, position, roomCode });
+      socket.emit("play", { roomCode, column, position, id });
       setCanPlay(false);
       checkWin(updatedBoard);
     }
