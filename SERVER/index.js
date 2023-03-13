@@ -17,10 +17,12 @@ io.on("connection", (socket) => {
 
   });
 
-  socket.on("play", ({ roomCode, column, position, id }) => {
+  socket.on("play", ({ roomCode, column, position, id, updatedRivalBoard }) => {
     console.log(`play at ${column}, cell ${position} at ${roomCode}`);
     console.log('this is id in server', id);
-    socket.broadcast.to(roomCode).emit("updateGame", id);
+    updatedRivalBoard[column][position] = "🟡";
+    const rivalMove = updatedRivalBoard;
+    socket.broadcast.to(roomCode).emit("updateGame", rivalMove);
   });
 
   socket.on("send_message", (data) => {

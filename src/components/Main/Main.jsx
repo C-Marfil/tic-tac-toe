@@ -20,17 +20,14 @@ const Main = ({ socket, roomCode }) => {
   const [canPlay, setCanPlay] = useState(true);
   const [username, setUsername] = useState("");
   const updatedBoard = board;
+  const updatedRivalBoard = board;
 
   useEffect(() => {
     socket.on(
       "updateGame",
-      (id) => {
-        console.log("this is id", id);
-        const column = id.split(".")[1].split("[")[0];
-        const position = id.split(".")[1].split("[")[1][0];
-        updatedBoard[column][position] = "🟡";
-        console.log("this is the Rival Board", updatedBoard);
-        setBoard(updatedBoard);
+      (rivalMove) => {
+        console.log("this is the Rival Board", rivalMove);
+        setBoard(rivalMove);
         setCanPlay(true);
       },
       [updatedBoard, board]
@@ -48,7 +45,13 @@ const Main = ({ socket, roomCode }) => {
       updatedBoard[column][position] = "🔴";
       console.log("move made by player", updatedBoard);
       setBoard(updatedBoard);
-      socket.emit("play", { id, column, position, roomCode });
+      socket.emit("play", {
+        id,
+        column,
+        position,
+        roomCode,
+        updatedRivalBoard,
+      });
       setCanPlay(false);
       checkWin(updatedBoard);
     }
