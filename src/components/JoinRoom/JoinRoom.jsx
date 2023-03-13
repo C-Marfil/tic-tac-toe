@@ -16,7 +16,8 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
     }
     setRoomCode(roomCodeInput);
     setRooms([...rooms, roomCodeInput]);
-    socket.emit("update-rooms", [...rooms, roomCodeInput]);
+    console.log("what rooms is", rooms);
+    socket.emit("update-rooms", rooms);
     navigate(`/room${roomCodeInput}`);
   };
 
@@ -39,11 +40,13 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
       }
     });
 
-    socket.on("rooms-incoming", (currentOpenRooms) => {
-      setRooms(currentOpenRooms);
+    socket.on("rooms-incoming", (allRooms) => {
+      console.log("allRooms", allRooms);
+      setRooms(allRooms);
     });
 
-  }, [setRoomCode, rooms]);
+    return () => socket.off("updateGame");
+  }, [setRoomCode]);
 
   return (
     <div>
