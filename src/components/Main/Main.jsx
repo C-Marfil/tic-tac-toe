@@ -22,18 +22,17 @@ const Main = ({ socket, roomCode }) => {
   const updatedBoard = board;
 
   useEffect(() => {
-    socket.on(
-      "updateGame",
-      (rivalMove) => {
-        console.log("this is the Rival's Move", rivalMove);
-        setBoard(rivalMove);
-        setCanPlay(true);
-      },
-      [updatedBoard, board]
-    );
-
-    return () => socket.off("updateGame");
-  });
+    socket.on("updateGame", (data, column, position) => {
+      setBoard((x) => ({
+        ...x,
+        [column]: { [position]: "🟡" },
+      }));
+      console.log("this is rival move", board);
+      console.log("this is data", data);
+      setCanPlay(true);
+      return () => socket.off("updateGame");
+    });
+  }, [updatedBoard, board, socket]);
 
   const handleCellClick = (e) => {
     const { id } = e.currentTarget;
@@ -177,7 +176,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column4[3]"
           text={board.column4[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column4[4]"
           text={board.column4[4]}
@@ -208,7 +207,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column5[3]"
           text={board.column5[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column5[4]"
           text={board.column5[4]}
@@ -239,7 +238,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column6[3]"
           text={board.column6[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column6[4]"
           text={board.column6[4]}
@@ -270,7 +269,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column7[3]"
           text={board.column7[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column7[4]"
           text={board.column7[4]}
