@@ -10,9 +10,8 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const saveLobby = JSON.stringify([...rooms]);
-  const lobby = JSON.parse(localStorage.getItem("lobby"))
+  const saveLobby = JSON.stringify([...rooms, roomCodeInput]);
+  const lobby = JSON.parse(localStorage.getItem("lobby"));
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -21,12 +20,11 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
     }
     setRoomCode(roomCodeInput);
     console.log("this is roomCodeInput at handleSave", roomCodeInput);
-    setRooms([...rooms]);
-    const saveLobby = JSON.stringify([...rooms, roomCodeInput]);
+    setRooms([...rooms, roomCodeInput]);
     localStorage.setItem("lobby", saveLobby);
     console.log("this is localStorage saved", localStorage.getItem("rooms"));
     socket.emit("update-rooms", rooms);
-    navigate(`/room${roomCodeInput}`); // In order to navigate how do I keep the lobby state from resetting?
+    navigate(`/room${roomCodeInput}`); 
     console.log("this is rooms at handleSave", rooms);
   };
 
@@ -40,12 +38,19 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
     console.log(event.target.id, "<----- event.target.id");
   };
 
+  const handleRefresh = () => {
+    if (lobby) {
+      setRooms(() => lobby);
+      console.log("this is lobby at refresh", lobby);
+    }
+  };
+
   useEffect(() => {
-    if (rooms.length >= 1 || lobby.length >= 1) {
+    if (lobby) {
       setRooms(() => lobby);
       console.log("this is lobby at location useEffect", lobby);
     }
-  }, [location]);
+  }, [location, roomCodeInput]);
 
   useEffect(() => {
     setRoomCode(roomCodeInput);
@@ -53,13 +58,13 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
     socket.on("numberOfUsers", (users, roomCode) => {
       if (users === 2) {
         const index = rooms.indexOf(roomCode);
-        const updatedRooms = rooms.splice(index, 1);
-
+        setRooms(rooms.splice(index, 0));
         localStorage.setItem("lobby", saveLobby);
-        socket.emit("update-rooms", updatedRooms);
+        socket.emit("update-rooms", rooms);
         console.log("users that will meet the condition if 2", users);
-        console.log("this is updatedRooms if users===2", updatedRooms);
+        console.log("this is updatedRooms if users===2", rooms);
         console.log("this is rooms if user ===2", rooms);
+        return () => socket.off("numberOfUsers");
       }
     });
   }, [setRoomCode]);
@@ -68,6 +73,9 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
     <div>
       <form>
         <h1 className="joinRoomModal-card-title">Enter a room code</h1>
+        <button type="button" onClick={handleRefresh}>
+          Refresh Rooms
+        </button>
         <input
           className="joinRoomModal-card-input"
           type="number"
