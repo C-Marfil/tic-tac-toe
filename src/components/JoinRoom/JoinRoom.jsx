@@ -1,13 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const JoinRoomModal = ({ setRoomCode, socket }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
   const [rooms, setRooms] = useState([]);
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const saveLobby = JSON.stringify([...rooms]);
+  const lobby = JSON.parse(localStorage.getItem("lobby"))
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -15,9 +20,14 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
       alert("Please select or create a room");
     }
     setRoomCode(roomCodeInput);
-    setRooms([...rooms, roomCodeInput]);
-    socket.emit("update-rooms", [...rooms, roomCodeInput]);
-    navigate(`/room${roomCodeInput}`);
+    console.log("this is roomCodeInput at handleSave", roomCodeInput);
+    setRooms([...rooms]);
+    const saveLobby = JSON.stringify([...rooms, roomCodeInput]);
+    localStorage.setItem("lobby", saveLobby);
+    console.log("this is localStorage saved", localStorage.getItem("rooms"));
+    socket.emit("update-rooms", rooms);
+    navigate(`/room${roomCodeInput}`); // In order to navigate how do I keep the lobby state from resetting?
+    console.log("this is rooms at handleSave", rooms);
   };
 
   socket.on("rooms-incoming", (currentOpenRooms) => {
@@ -31,15 +41,25 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
   };
 
   useEffect(() => {
+    if (rooms.length >= 1 || lobby.length >= 1) {
+      setRooms(() => lobby);
+      console.log("this is lobby at location useEffect", lobby);
+    }
+  }, [location]);
+
+  useEffect(() => {
     setRoomCode(roomCodeInput);
 
     socket.on("numberOfUsers", (users, roomCode) => {
       if (users === 2) {
         const index = rooms.indexOf(roomCode);
         const updatedRooms = rooms.splice(index, 1);
+
+        localStorage.setItem("lobby", saveLobby);
         socket.emit("update-rooms", updatedRooms);
-        console.log("this is updatedRooms", updatedRooms);
-        console.log("this is rooms", rooms);
+        console.log("users that will meet the condition if 2", users);
+        console.log("this is updatedRooms if users===2", updatedRooms);
+        console.log("this is rooms if user ===2", rooms);
       }
     });
   }, [setRoomCode]);

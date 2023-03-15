@@ -15,6 +15,7 @@ const App = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    console.log(username);
     console.log(roomCode);
     if (roomCode) {
       socket.emit("joinRoom", roomCode);

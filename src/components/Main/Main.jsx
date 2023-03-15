@@ -20,15 +20,16 @@ const Main = ({ socket, roomCode }) => {
   const [canPlay, setCanPlay] = useState(true);
   const [username, setUsername] = useState("");
   const updatedBoard = board;
+  const rivalBoard = board;
 
   useEffect(() => {
     socket.on("updateGame", (data, column, position) => {
-      setBoard((x) => ({
-        ...x,
-        [column]: { [position]: "🟡" },
-      }));
-      console.log("this is rival move", board);
-      console.log("this is data", data);
+      console.log("this is data before insert", data);
+      rivalBoard[column][position] = "🟡";
+      setBoard(rivalBoard);
+      console.log("this is data after insert", data);
+      console.log("this is board", board);
+      console.log(`this is the position syntax: ${board[column][position]}`);
       setCanPlay(true);
       return () => socket.off("updateGame");
     });
@@ -43,7 +44,7 @@ const Main = ({ socket, roomCode }) => {
       updatedBoard[column][position] = "🔴";
       console.log("move made by player", updatedBoard);
       setBoard(updatedBoard);
-      socket.emit("play", { id, column, position, roomCode, updatedBoard });
+      socket.emit("play", { id, column, position, roomCode, rivalBoard });
       setCanPlay(false);
       checkWin(updatedBoard);
     }

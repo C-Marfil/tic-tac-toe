@@ -17,20 +17,19 @@ io.on("connection", (socket) => {
 
   });
 
-  socket.on("play", ({ id, column, position, roomCode, updatedBoard }) => {
+  socket.on("play", ({ id, column, position, roomCode, rivalBoard }) => {
     console.log(`play at ${column}, cell ${position} at ${roomCode}`);
     console.log('this is id in server', id);
-    socket.broadcast.to(roomCode).emit("updateGame", updatedBoard, column, position);
+    socket.broadcast.to(roomCode).emit("updateGame", rivalBoard, column, position);
   });
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
   });
 
-  socket.on("update-rooms", (data) => {
-    console.log(data);
-    const currentOpenRooms = data;
-    socket.broadcast.emit("rooms-incoming", currentOpenRooms);
+  socket.on("update-rooms", (rooms) => {
+    console.log(rooms);
+    socket.broadcast.emit("rooms-incoming", rooms);
   })
 
   socket.on("disconnect", () => {
