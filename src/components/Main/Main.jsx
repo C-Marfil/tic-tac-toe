@@ -1,11 +1,12 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Cell from "../Cell/Cell";
-import "./main.css";
 import checkWin from "./helperWin";
 import Chat from "../Chat/Chat";
+import "./main.css";
 
 const Main = ({ socket, roomCode }) => {
   const [board, setBoard] = useState({
@@ -20,6 +21,7 @@ const Main = ({ socket, roomCode }) => {
   const [canPlay, setCanPlay] = useState(true);
   const [username, setUsername] = useState("");
   const updatedBoard = board;
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on("updateGame", (data, column, position) => {
@@ -31,6 +33,12 @@ const Main = ({ socket, roomCode }) => {
       return () => socket.off("updateGame");
     });
   }, [updatedBoard, board, socket]);
+
+  const handleLeave = (e) => {
+    e.preventDefault();
+    socket.emit("leave-room", roomCode);
+    navigate("/lobby");
+  };
 
   const handleCellClick = (e) => {
     const { id } = e.currentTarget;
@@ -51,12 +59,17 @@ const Main = ({ socket, roomCode }) => {
     <main>
       <div>
         {roomCode !== null && (
-          <Chat
-            roomCode={roomCode}
-            username={username}
-            setUsername={setUsername}
-            socket={socket}
-          />
+          <>
+            <Chat
+              roomCode={roomCode}
+              username={username}
+              setUsername={setUsername}
+              socket={socket}
+            />
+            <button type="button" onClick={handleLeave}>
+              Leave Room
+            </button>
+          </>
         )}
       </div>
       <section className="main-section">

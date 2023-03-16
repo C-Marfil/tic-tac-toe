@@ -55,7 +55,7 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
   useEffect(() => {
     setRoomCode(roomCodeInput);
 
-    socket.on("numberOfUsers", (users, roomCode) => {
+    socket.on("numberOfUsers", (users, roomCode) => { // FIX THIS
       if (users === 2) {
         const index = rooms.indexOf(roomCode);
         setRooms(rooms.splice(index, 0));
