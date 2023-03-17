@@ -15,11 +15,6 @@ const Header = (roomCode, socket) => {
       <button type="button" onClick={handleHome}>
         Home
       </button>
-      {/* {roomCode && (
-        <button type="button" onClick={handleLobby}>
-          Return to Lobby
-        </button>
-      )} */}
     </header>
   );
 };

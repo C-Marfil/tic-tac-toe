@@ -3,18 +3,15 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
+const rawRooms = [];
 
 io.on("connection", (socket) => {
   console.log("User Connected");
 
   socket.on("joinRoom", (roomCode) => {
-    const room = io.sockets.adapter.rooms.get(roomCode);
     console.log(`A user joined the room ${roomCode}`);
     socket.join(roomCode);
-    const users = room ? room.size : 0;
-    console.log(`there are these many users connected to room ${roomCode}:`, users);
-    socket.emit("numberOfUsers", users, roomCode);
-
+    console.log(`there are these many users connected to room ${roomCode}:`, io.sockets.adapter.rooms.get(roomCode).size);
   });
 
   socket.on("play", ({ id, column, position, roomCode, updatedBoard }) => {
@@ -31,17 +28,47 @@ io.on("connection", (socket) => {
     socket.to(data.room).emit("receive_message", data);
   });
 
-  socket.on("update-rooms", (rooms) => {
-    console.log(rooms);
-    socket.broadcast.emit("rooms-incoming", rooms);
-  })
+  socket.on("update-lobby", (roomCode) => {
+    let users = 0;
+    const repeatedCode = rawRooms.find((x) => x === roomCode);
+    const index = rawRooms.indexOf(roomCode);
+
+    if(repeatedCode) {
+      rawRooms.splice(index, 1);
+      console.log("repeated room... deleting!");
+    }
+
+    rawRooms.push(roomCode);
+    socket.join(roomCode);
+    
+    if (io.sockets.adapter.rooms.has(roomCode)) {
+    users = io.sockets.adapter.rooms.get(roomCode).size;
+    
+    console.log(rawRooms);
+    console.log(`there are these many users connected to room ${roomCode}:`, io.sockets.adapter.rooms.get(roomCode).size);
+
+    if(users === 2) {
+      rawRooms.splice(index, 1);
+      console.log("room full");
+    };
+    if(users === 0) {
+      rawRooms.splice(index, 1);
+      console.log("room empty");    
+    };
+    
+    const rawRoomsString = JSON.stringify(rawRooms);
+
+    socket.broadcast.emit("rawRoomsString-incoming", rawRoomsString);
+  }
+  });
 
   socket.on("leave-room", (roomCode) => {
-    console.log(`User left room ${roomCode}`);
     socket.leave(roomCode);
+    console.log(`User left room ${roomCode}`);
   });
 
   socket.on("disconnect", () => {
+    socket.emit("clean");
     console.log("User Disconnected");
   });
 });

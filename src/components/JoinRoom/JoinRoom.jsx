@@ -1,16 +1,17 @@
+/* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const JoinRoomModal = ({ setRoomCode, socket }) => {
+const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
   const [rooms, setRooms] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const saveLobby = JSON.stringify([...rooms, roomCodeInput]);
+
   const lobby = JSON.parse(localStorage.getItem("lobby"));
 
   const handleSave = (e) => {
@@ -18,24 +19,24 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
     if (roomCodeInput === null) {
       alert("Please select or create a room");
     }
+    socket.emit("update-lobby", roomCodeInput);
+    console.log("...updating Lobby");
     setRoomCode(roomCodeInput);
-    console.log("this is roomCodeInput at handleSave", roomCodeInput);
-    setRooms([...rooms, roomCodeInput]);
-    localStorage.setItem("lobby", saveLobby);
-    console.log("this is localStorage saved", localStorage.getItem("rooms"));
-    socket.emit("update-rooms", rooms);
-    navigate(`/room${roomCodeInput}`); 
-    console.log("this is rooms at handleSave", rooms);
+    navigate(`/room${roomCodeInput}`);
   };
 
-  socket.on("rooms-incoming", (currentOpenRooms) => {
-    setRooms(currentOpenRooms);
+  socket.on("rawRoomsString-incoming", (rawRoomsString) => {
+    console.log("...setting lobby in localStorage");
+    localStorage.setItem("lobby", rawRoomsString);
+    setRooms(lobby);
   });
 
-  const handleRoomClick = (event) => {
-    setRoomCode(event.target.id);
-    navigate(`/room${event.target.id}`);
-    console.log(event.target.id, "<----- event.target.id");
+  const handleRoomClick = (e) => {
+    const buttonID = e.target.id;
+    setRoomCode(buttonID);
+    socket.emit("update-lobby", roomCode);
+      console.log("...updating Lobby");
+      navigate(`/room${e.target.id}`);
   };
 
   const handleRefresh = () => {
@@ -53,21 +54,11 @@ const JoinRoomModal = ({ setRoomCode, socket }) => {
   }, [location, roomCodeInput]);
 
   useEffect(() => {
-    setRoomCode(roomCodeInput);
-
-    socket.on("numberOfUsers", (users, roomCode) => { // FIX THIS
-      if (users === 2) {
-        const index = rooms.indexOf(roomCode);
-        setRooms(rooms.splice(index, 0));
-        localStorage.setItem("lobby", saveLobby);
-        socket.emit("update-rooms", rooms);
-        console.log("users that will meet the condition if 2", users);
-        console.log("this is updatedRooms if users===2", rooms);
-        console.log("this is rooms if user ===2", rooms);
-        return () => socket.off("numberOfUsers");
-      }
-    });
-  }, [setRoomCode]);
+    if (roomCode !== null) {
+      socket.emit("update-lobby", roomCode);
+      console.log("...updating Lobby");
+    }
+  }, [roomCode]);
 
   return (
     <div>

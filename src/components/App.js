@@ -14,6 +14,10 @@ const App = () => {
   const [roomCode, setRoomCode] = useState(null);
   const [username, setUsername] = useState("");
 
+  socket.on("clean", () => {
+    localStorage.clear();
+  });
+
   useEffect(() => {
     console.log(username);
     console.log(roomCode);
@@ -39,7 +43,13 @@ const App = () => {
         {username && (
           <Route
             path="/lobby"
-            element={<JoinRoom socket={socket} setRoomCode={setRoomCode} />}
+            element={
+              <JoinRoom
+                socket={socket}
+                roomCode={roomCode}
+                setRoomCode={setRoomCode}
+              />
+            }
           />
         )}
 
