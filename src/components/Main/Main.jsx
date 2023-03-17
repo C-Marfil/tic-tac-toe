@@ -37,6 +37,7 @@ const Main = ({ socket, roomCode }) => {
   const handleLeave = (e) => {
     e.preventDefault();
     socket.emit("leave-room", roomCode);
+    console.log("leaving room...");
     navigate("/lobby");
   };
 

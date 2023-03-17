@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -35,8 +34,8 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
     const buttonID = e.target.id;
     setRoomCode(buttonID);
     socket.emit("update-lobby", roomCode);
-      console.log("...updating Lobby");
-      navigate(`/room${e.target.id}`);
+    console.log("...updating Lobby");
+    navigate(`/room${e.target.id}`);
   };
 
   const handleRefresh = () => {
@@ -101,8 +100,17 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   );
 };
 
+JoinRoomModal.defaultProps = {
+  roomCode: null,
+};
+
 JoinRoomModal.propTypes = {
   setRoomCode: PropTypes.func.isRequired,
+  roomCode: PropTypes.string,
+  socket: PropTypes.shape({
+    emit: PropTypes.func.isRequired,
+    on: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default JoinRoomModal;

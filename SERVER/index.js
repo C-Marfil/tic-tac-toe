@@ -3,7 +3,9 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
+
 const rawRooms = [];
+let users = 0;
 
 io.on("connection", (socket) => {
   console.log("User Connected");
@@ -29,7 +31,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("update-lobby", (roomCode) => {
-    let users = 0;
     const repeatedCode = rawRooms.find((x) => x === roomCode);
     const index = rawRooms.indexOf(roomCode);
 
@@ -44,16 +45,12 @@ io.on("connection", (socket) => {
     if (io.sockets.adapter.rooms.has(roomCode)) {
     users = io.sockets.adapter.rooms.get(roomCode).size;
     
-    console.log(rawRooms);
+    console.log("RawRooms:", rawRooms);
     console.log(`there are these many users connected to room ${roomCode}:`, io.sockets.adapter.rooms.get(roomCode).size);
 
     if(users === 2) {
       rawRooms.splice(index, 1);
       console.log("room full");
-    };
-    if(users === 0) {
-      rawRooms.splice(index, 1);
-      console.log("room empty");    
     };
     
     const rawRoomsString = JSON.stringify(rawRooms);
@@ -63,8 +60,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("leave-room", (roomCode) => {
+    const index = rawRooms.indexOf(roomCode);
     socket.leave(roomCode);
     console.log(`User left room ${roomCode}`);
+
+      rawRooms.splice(index, 1);
+      console.log("room empty");    
   });
 
   socket.on("disconnect", () => {
