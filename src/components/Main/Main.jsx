@@ -1,11 +1,12 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Cell from "../Cell/Cell";
-import "./main.css";
 import checkWin from "./helperWin";
 import Chat from "../Chat/Chat";
+import "./main.css";
 
 const Main = ({ socket, roomCode }) => {
   const [board, setBoard] = useState({
@@ -20,24 +21,25 @@ const Main = ({ socket, roomCode }) => {
   const [canPlay, setCanPlay] = useState(true);
   const [username, setUsername] = useState("");
   const updatedBoard = board;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    socket.on(
-      "updateGame",
-      (id) => {
-        console.log("this is id", id);
-        const column = id.split(".")[1].split("[")[0];
-        const position = id.split(".")[1].split("[")[1][0];
-        updatedBoard[column][position] = "🟡";
-        console.log("this is the Rival Board", updatedBoard);
-        setBoard(updatedBoard);
-        setCanPlay(true);
-      },
-      [updatedBoard, board]
-    );
+    socket.on("updateGame", (data, column, position) => {
+      console.log("this is data before insert", data);
+      setBoard(updatedBoard, (updatedBoard[column][position] = "🟡"));
+      console.log("this is data after insert", data);
+      console.log("this is board", board);
+      setCanPlay(true);
+      return () => socket.off("updateGame");
+    });
+  }, [updatedBoard, board, socket]);
 
-    return () => socket.off("updateGame");
-  });
+  const handleLeave = (e) => {
+    e.preventDefault();
+    socket.emit("leave-room", roomCode);
+    console.log("leaving room...");
+    navigate("/lobby");
+  };
 
   const handleCellClick = (e) => {
     const { id } = e.currentTarget;
@@ -47,8 +49,8 @@ const Main = ({ socket, roomCode }) => {
     if (canPlay && updatedBoard[column][position] === "") {
       updatedBoard[column][position] = "🔴";
       console.log("move made by player", updatedBoard);
-      setBoard(updatedBoard);
-      socket.emit("play", { roomCode, column, position, id });
+      setBoard(updatedBoard, (updatedBoard[column][position] = "🔴"));
+      socket.emit("play", { id, column, position, roomCode, updatedBoard });
       setCanPlay(false);
       checkWin(updatedBoard);
     }
@@ -58,12 +60,17 @@ const Main = ({ socket, roomCode }) => {
     <main>
       <div>
         {roomCode !== null && (
-          <Chat
-            roomCode={roomCode}
-            username={username}
-            setUsername={setUsername}
-            socket={socket}
-          />
+          <>
+            <Chat
+              roomCode={roomCode}
+              username={username}
+              setUsername={setUsername}
+              socket={socket}
+            />
+            <button type="button" onClick={handleLeave}>
+              Leave Room
+            </button>
+          </>
         )}
       </div>
       <section className="main-section">
@@ -181,7 +188,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column4[3]"
           text={board.column4[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column4[4]"
           text={board.column4[4]}
@@ -212,7 +219,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column5[3]"
           text={board.column5[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column5[4]"
           text={board.column5[4]}
@@ -243,7 +250,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column6[3]"
           text={board.column6[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column6[4]"
           text={board.column6[4]}
@@ -274,7 +281,7 @@ const Main = ({ socket, roomCode }) => {
           id="board.column7[3]"
           text={board.column7[3]}
         />
-         <Cell
+        <Cell
           handleCellClick={handleCellClick}
           id="board.column7[4]"
           text={board.column7[4]}
