@@ -61,11 +61,14 @@ io.on("connection", (socket) => {
 
   socket.on("leave-room", (roomCode) => {
     const index = rawRooms.indexOf(roomCode);
+    const rawRoomsString = JSON.stringify(rawRooms);
+
     socket.leave(roomCode);
     console.log(`User left room ${roomCode}`);
 
-      rawRooms.splice(index, 1);
-      console.log("room empty");    
+    rawRooms.splice(index, 1);
+    console.log("room empty");    
+    socket.broadcast.emit("rawRoomsString-incoming", rawRoomsString);
   });
 
   socket.on("disconnect", () => {

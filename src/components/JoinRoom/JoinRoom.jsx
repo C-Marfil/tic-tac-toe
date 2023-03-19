@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
+const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
   const [rooms, setRooms] = useState([]);
 
@@ -62,12 +63,12 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   return (
     <div>
       <form>
-        <h1 className="joinRoomModal-card-title">Enter a room code</h1>
+        <h1 className="JoinRoom-card-title">Enter a room code</h1>
         <button type="button" onClick={handleRefresh}>
           Refresh Rooms
         </button>
         <input
-          className="joinRoomModal-card-input"
+          className="JoinRoom-card-input"
           type="number"
           value={roomCodeInput}
           placeholder="eg: 1212"
@@ -76,7 +77,7 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
         <button
           type="submit"
           onClick={(e) => handleSave(e)}
-          className="joinRoomModal-card-button"
+          className="JoinRoom-card-button"
         >
           Save
         </button>
@@ -100,11 +101,11 @@ const JoinRoomModal = ({ setRoomCode, socket, roomCode }) => {
   );
 };
 
-JoinRoomModal.defaultProps = {
+JoinRoom.defaultProps = {
   roomCode: null,
 };
 
-JoinRoomModal.propTypes = {
+JoinRoom.propTypes = {
   setRoomCode: PropTypes.func.isRequired,
   roomCode: PropTypes.string,
   socket: PropTypes.shape({
@@ -113,4 +114,4 @@ JoinRoomModal.propTypes = {
   }).isRequired,
 };
 
-export default JoinRoomModal;
+export default JoinRoom;

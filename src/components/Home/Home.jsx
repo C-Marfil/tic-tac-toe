@@ -1,8 +1,15 @@
+/* eslint-disable no-alert */
 import React from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const Home = ({ setUsername, username }) => {
   const navigate = useNavigate();
+
+  const handleUsername = (event) => {
+    event.preventDefault();
+    setUsername(event.target.value);
+  };
 
   return (
     <div>
@@ -12,7 +19,7 @@ const Home = ({ setUsername, username }) => {
           type="text"
           placeholder="Username..."
           onChange={(event) => {
-            setUsername(event.target.value);
+            handleUsername(event);
           }}
         />
         <button
@@ -30,6 +37,11 @@ const Home = ({ setUsername, username }) => {
       </div>
     </div>
   );
+};
+
+Home.propTypes = {
+  setUsername: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default Home;

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
-const Header = (roomCode, socket) => {
+const Header = () => {
   const navigate = useNavigate();
 
   const handleHome = () => {

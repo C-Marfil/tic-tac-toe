@@ -8,7 +8,7 @@ import checkWin from "./helperWin";
 import Chat from "../Chat/Chat";
 import "./main.css";
 
-const Main = ({ socket, roomCode }) => {
+const Main = ({ socket, roomCode, username }) => {
   const [board, setBoard] = useState({
     column1: ["", "", "", "", "", ""],
     column2: ["", "", "", "", "", ""],
@@ -19,7 +19,6 @@ const Main = ({ socket, roomCode }) => {
     column7: ["", "", "", "", "", ""],
   });
   const [canPlay, setCanPlay] = useState(true);
-  const [username, setUsername] = useState("");
   const updatedBoard = board;
   const navigate = useNavigate();
 
@@ -61,12 +60,7 @@ const Main = ({ socket, roomCode }) => {
       <div>
         {roomCode !== null && (
           <>
-            <Chat
-              roomCode={roomCode}
-              username={username}
-              setUsername={setUsername}
-              socket={socket}
-            />
+            <Chat roomCode={roomCode} username={username} socket={socket} />
             <button type="button" onClick={handleLeave}>
               Leave Room
             </button>
@@ -303,6 +297,7 @@ Main.defaultProps = {
 Main.propTypes = {
   socket: PropTypes.object.isRequired,
   roomCode: PropTypes.string,
+  username: PropTypes.string.isRequired,
 };
 
 export default Main;

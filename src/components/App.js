@@ -40,19 +40,17 @@ const App = () => {
             />
           }
         />
-        {username && (
-          <Route
-            path="/lobby"
-            element={
-              <JoinRoom
-                socket={socket}
-                roomCode={roomCode}
-                setRoomCode={setRoomCode}
-              />
-            }
-          />
-        )}
-
+        <Route
+          path="/lobby"
+          element={
+            <JoinRoom
+              socket={socket}
+              roomCode={roomCode}
+              username={username}
+              setRoomCode={setRoomCode}
+            />
+          }
+        />
         <Route
           path={`/room${roomCode}`}
           element={

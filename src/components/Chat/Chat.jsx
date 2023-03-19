@@ -3,7 +3,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import PropTypes from "prop-types";
 import "./chat.css";
 
-const Chat = ({ socket, roomCode, username, setUsername }) => {
+const Chat = ({ socket, roomCode, username }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
@@ -80,9 +80,11 @@ const Chat = ({ socket, roomCode, username, setUsername }) => {
 
 Chat.propTypes = {
   roomCode: PropTypes.string.isRequired,
-  socket: PropTypes.object.isRequired,
+  socket: PropTypes.shape({
+    emit: PropTypes.func.isRequired,
+    off: PropTypes.func.isRequired,
+  }).isRequired,
   username: PropTypes.string.isRequired,
-  setUsername: PropTypes.func.isRequired,
 };
 
 export default Chat;

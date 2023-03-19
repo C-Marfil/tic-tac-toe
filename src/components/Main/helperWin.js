@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const checkWin = (updatedBoard) => {
   // horizonal win
   if (
@@ -423,7 +424,8 @@ const checkWin = (updatedBoard) => {
     console.log("You're a winner!!");
   } else {
     console.log("next turn");
-  }if (
+  }
+  if (
     (updatedBoard.column7[0] === "🟡" &&
       updatedBoard.column7[1] === "🟡" &&
       updatedBoard.column7[2] === "🟡" &&
