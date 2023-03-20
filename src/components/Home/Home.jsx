@@ -1,10 +1,11 @@
 /* eslint-disable no-alert */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const Home = ({ setUsername, username }) => {
   const navigate = useNavigate();
+  const [error, setError] = useState(false);
 
   const handleUsername = (event) => {
     event.preventDefault();
@@ -17,6 +18,7 @@ const Home = ({ setUsername, username }) => {
         <h3>Join the Conversation</h3>
         <input
           type="text"
+          aria-label="username-input"
           placeholder="Username..."
           onChange={(event) => {
             handleUsername(event);
@@ -28,12 +30,13 @@ const Home = ({ setUsername, username }) => {
             if (username) {
               navigate("/lobby");
             } else {
-              alert("Please choose your username");
+              setError(true);
             }
           }}
         >
           👍
         </button>
+        {error && <p>Please enter your username before proceeding</p>}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
   const [rooms, setRooms] = useState([]);
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,12 +18,15 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   const handleSave = (e) => {
     e.preventDefault();
     if (roomCodeInput === null) {
-      alert("Please select or create a room");
+      setError(true);
     }
-    socket.emit("update-lobby", roomCodeInput);
-    console.log("...updating Lobby");
-    setRoomCode(roomCodeInput);
-    navigate(`/room${roomCodeInput}`);
+    if (roomCodeInput) {
+      socket.emit("update-lobby", roomCodeInput);
+      console.log("...updating Lobby");
+      setRoomCode(roomCodeInput);
+      setError(false);
+      navigate(`/room${roomCodeInput}`);
+    }
   };
 
   socket.on("rawRoomsString-incoming", (rawRoomsString) => {
@@ -68,7 +72,8 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
           Refresh Rooms
         </button>
         <input
-          className="JoinRoom-card-input"
+          className="roomcode-input"
+          aria-label="roomcode-input"
           type="number"
           value={roomCodeInput}
           placeholder="eg: 1212"
@@ -81,6 +86,7 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
         >
           Save
         </button>
+        {error && <p>Please enter a room code to create a room</p>}
       </form>
       <div>
         {rooms.map((room) => {

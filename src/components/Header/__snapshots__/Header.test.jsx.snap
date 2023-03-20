@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component, children and Routing render/work properly Snapshot test 1`] = `
+<DocumentFragment>
+  <header>
+    <h1
+      class="header-title"
+    >
+      Connect4 To Be
+    </h1>
+    <button
+      type="button"
+    >
+      Home
+    </button>
+  </header>
+</DocumentFragment>
+`;

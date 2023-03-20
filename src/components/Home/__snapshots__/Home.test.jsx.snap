@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Component, children and Routing render/work properly Snapshot test 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="joinChatContainer"
+    >
+      <h3>
+        Join the Conversation
+      </h3>
+      <input
+        aria-label="username-input"
+        placeholder="Username..."
+        type="text"
+      />
+      <button
+        type="button"
+      >
+        👍
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

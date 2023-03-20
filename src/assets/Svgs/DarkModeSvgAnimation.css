@@ -1,7 +1,0 @@
-.darkMode-svg-path {
-    transition: d 0.25s ease;
-  }
-  
-  .darkMode-svg:hover .darkMode-svg-path {
-    d: path("M 10 0 C 28 0 28 23 10 23 C 10 10 10 10 10 0");
-  }
