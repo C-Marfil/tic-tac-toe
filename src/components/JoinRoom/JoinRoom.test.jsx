@@ -6,8 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 import JoinRoom from "./JoinRoom";
 
 describe("JoinRoom, children and Routing render/work properly", () => {
+  const rooms = [];
   const socket = {
-    on: jest.fn(),
+    on: jest.fn(rooms.push(13)),
     off: jest.fn(),
     emit: jest.fn(),
   };

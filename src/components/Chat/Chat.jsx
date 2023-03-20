@@ -24,7 +24,8 @@ const Chat = ({ socket, roomCode, username }) => {
   };
 
   useEffect(() => {
-    socket.off("receive_message").on("receive_message", (data) => {
+    socket.off("receive_message");
+    socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
@@ -59,6 +60,7 @@ const Chat = ({ socket, roomCode, username }) => {
       <div className="chat-footer">
         <input
           type="text"
+          aria-label="message-input"
           value={currentMessage}
           placeholder="Chat"
           onChange={(event) => {
@@ -83,6 +85,7 @@ Chat.propTypes = {
   socket: PropTypes.shape({
     emit: PropTypes.func.isRequired,
     off: PropTypes.func.isRequired,
+    on: PropTypes.func.isRequired,
   }).isRequired,
   username: PropTypes.string.isRequired,
 };
