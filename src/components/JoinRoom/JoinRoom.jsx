@@ -3,6 +3,17 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  ChakraProvider,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Flex,
+  Stack,
+  Button,
+} from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
@@ -65,45 +76,75 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   }, [roomCode]);
 
   return (
-    <div>
-      <form>
-        <h1 className="JoinRoom-card-title">Enter a room code</h1>
-        <button type="button" onClick={handleRefresh}>
-          Refresh Rooms
-        </button>
-        <input
-          className="roomcode-input"
-          aria-label="roomcode-input"
-          type="number"
-          value={roomCodeInput}
-          placeholder="eg: 1212"
-          onChange={(e) => setRoomCodeInput(e.target.value)}
-        />
-        <button
-          type="submit"
-          onClick={(e) => handleSave(e)}
-          className="JoinRoom-card-button"
-        >
-          Save
-        </button>
-        {error && <p>Please enter a room code to create a room</p>}
-      </form>
+    <ChakraProvider>
       <div>
-        {rooms.map((room) => {
-          return (
-            <button
-              type="button"
-              id={room}
-              onClick={(e) => {
-                handleRoomClick(e);
-              }}
+        <form>
+          <h1 className="JoinRoom-card-title">Enter a room code</h1>
+          <button type="button" onClick={handleRefresh}>
+            Refresh Rooms
+          </button>
+          <Flex justify="center">
+            <NumberInput
+              className="NumberInput"
+              min={1}
+              max={99}
+              width="auto"
+              size="md"
             >
-              Join room {room}
-            </button>
-          );
-        })}
+              <NumberInputField
+                value={roomCodeInput}
+                onChange={(e) => setRoomCodeInput(e.target.value)}
+              />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Stack direction="row" spacing={4} align="center">
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                type="submit"
+                onClick={(e) => handleSave(e)}
+              >
+                Save
+              </Button>
+            </Stack>
+          </Flex>
+          {/* <input
+            className="roomcode-input"
+            aria-label="roomcode-input"
+            type="number"
+            value={roomCodeInput}
+            placeholder="eg: 1212"
+            onChange={(e) => setRoomCodeInput(e.target.value)}
+          />
+          <button
+            type="submit"
+            onClick={(e) => handleSave(e)}
+            className="JoinRoom-card-button"
+          >
+            Save
+          </button> */}
+          {error && <p>Please enter a room code to create a room</p>}
+        </form>
+        <div>
+          {rooms.map((room) => {
+            return (
+              <button
+                type="button"
+                id={room}
+                onClick={(e) => {
+                  handleRoomClick(e);
+                }}
+              >
+                Join room {room}
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </ChakraProvider>
   );
 };
 
