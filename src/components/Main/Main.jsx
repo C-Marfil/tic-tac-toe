@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Cell from "../Cell/Cell";
-import checkWin from "./helperWin";
+import winning from "./forLoopWin";
 import Chat from "../Chat/Chat";
 import "./main.css";
 
@@ -19,6 +19,7 @@ const Main = ({ socket, roomCode, username }) => {
     column7: ["", "", "", "", "", ""],
   });
   const [canPlay, setCanPlay] = useState(true);
+  const [win, setWin] = useState(false);
   const updatedBoard = board;
   const navigate = useNavigate();
 
@@ -51,13 +52,14 @@ const Main = ({ socket, roomCode, username }) => {
       setBoard(updatedBoard, (updatedBoard[column][position] = "🔴"));
       socket.emit("play", { id, column, position, roomCode, updatedBoard });
       setCanPlay(false);
-      checkWin(updatedBoard);
+      setWin(winning(board));
     }
   };
 
   return (
     <main>
       <div>
+        {win && <h1>YOU WIN!!!!</h1>}
         {roomCode !== null && (
           <>
             <Chat roomCode={roomCode} username={username} socket={socket} />
