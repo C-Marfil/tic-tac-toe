@@ -15,8 +15,12 @@ padding: 0%;
 
 .joinChatContainer {
 display: flex;
-flex-direction: column;
-text-align: center;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+flex-flow: column wrap;
+padding-top: 65px;
+border: 1px black solid;
 }
 
 .joinChatContainer h3 {
@@ -27,7 +31,7 @@ margin-bottom: 1rem;
 width: 210px;
 height: 40px;
 margin: 7px;
-border: 2px solid #43a047;
+border: 2px solid #25D366;
 border-radius: 5px;
 padding: 5px;
 font-size: 16px;
@@ -41,13 +45,12 @@ border: none;
 border-radius: 5px;
 padding: 5px;
 font-size: 16px;
-background: #43a047;
 color: #fff;
 cursor: pointer;
 }
 
 .joinChatContainer button:hover {
-background: #2e7d32;
+background: #0fbe18;
 }
 
 .chat-window {
