@@ -32,7 +32,7 @@ describe("my awesome project", () => {
   });
 
   test("should work (with ack)", (done) => {
-    serverSocket.on("hi", (cb) => {
+    serverSocket.on("joinRoom", (cb) => {
       cb("hola");
     });
     clientSocket.emit("hi", (arg) => {
