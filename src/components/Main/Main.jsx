@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
@@ -20,19 +21,29 @@ const Main = ({ socket, roomCode, username }) => {
   });
   const [canPlay, setCanPlay] = useState(true);
   const [win, setWin] = useState(false);
+  const [lose, setLose] = useState(false);
   const updatedBoard = board;
   const navigate = useNavigate();
 
   useEffect(() => {
     socket.on("updateGame", (data, column, position) => {
-      console.log("this is data before insert", data);
       setBoard(updatedBoard, (updatedBoard[column][position] = "🟡"));
-      console.log("this is data after insert", data);
-      console.log("this is board", board);
       setCanPlay(true);
       return () => socket.off("updateGame");
     });
   }, [updatedBoard, board, socket]);
+
+  useEffect(() => {
+    if (win === true) {
+      setCanPlay(false);
+      socket.emit("gameover", roomCode);
+    }
+  }, [socket, win]);
+
+  socket.on("you-lose", () => {
+    setCanPlay(false);
+    setLose(true);
+  });
 
   const handleLeave = (e) => {
     e.preventDefault();
@@ -48,7 +59,6 @@ const Main = ({ socket, roomCode, username }) => {
 
     if (canPlay && updatedBoard[column][position] === "") {
       updatedBoard[column][position] = "🔴";
-      console.log("move made by player", updatedBoard);
       setBoard(updatedBoard, (updatedBoard[column][position] = "🔴"));
       socket.emit("play", { id, column, position, roomCode, updatedBoard });
       setCanPlay(false);
@@ -59,6 +69,7 @@ const Main = ({ socket, roomCode, username }) => {
   return (
     <main>
       <div>
+        {lose && <h1>YOU LOSE!!!!</h1>}
         {win && <h1>YOU WIN!!!!</h1>}
         {roomCode !== null && (
           <>

@@ -71,6 +71,10 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("rawRoomsString-incoming", rawRoomsString);
   });
 
+  socket.on("gameover", (roomCode) => {
+    socket.broadcast.to(roomCode).emit("you-lose");
+  })
+
   socket.on("disconnect", () => {
     socket.emit("clean");
     console.log("User Disconnected");
