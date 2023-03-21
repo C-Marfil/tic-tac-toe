@@ -3,6 +3,17 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  ChakraProvider,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Flex,
+  Button,
+  Box,
+} from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
@@ -65,45 +76,86 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   }, [roomCode]);
 
   return (
-    <div>
-      <form>
-        <h1 className="JoinRoom-card-title">Enter a room code</h1>
-        <button type="button" onClick={handleRefresh}>
-          Refresh Rooms
-        </button>
-        <input
-          className="roomcode-input"
-          aria-label="roomcode-input"
-          type="number"
-          value={roomCodeInput}
-          placeholder="eg: 1212"
-          onChange={(e) => setRoomCodeInput(e.target.value)}
-        />
-        <button
-          type="submit"
-          onClick={(e) => handleSave(e)}
-          className="JoinRoom-card-button"
-        >
-          Save
-        </button>
-        {error && <p>Please enter a room code to create a room</p>}
-      </form>
+    <ChakraProvider>
       <div>
-        {rooms.map((room) => {
-          return (
-            <button
-              type="button"
-              id={room}
-              onClick={(e) => {
-                handleRoomClick(e);
-              }}
+        <form>
+          <h1 className="JoinRoom-card-title">Enter a room code</h1>
+          {/* <button type="button" onClick={handleRefresh}>
+            Refresh Rooms
+          </button> */}
+          <Flex display="flex" alignItems="center" justifyContent="center">
+            <NumberInput
+              className="NumberInput"
+              min={1}
+              max={99}
+              width="auto"
+              size="md"
             >
-              Join room {room}
-            </button>
-          );
-        })}
+              <NumberInputField
+                value={roomCodeInput}
+                placeholder="eg: 14"
+                onChange={(e) => setRoomCodeInput(e.target.value)}
+              />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              type="submit"
+              onClick={(e) => handleSave(e)}
+            >
+              Save
+            </Button>
+          </Flex>
+          {/* <input
+            className="roomcode-input"
+            aria-label="roomcode-input"
+            type="number"
+            value={roomCodeInput}
+            placeholder="eg: 1212"
+            onChange={(e) => setRoomCodeInput(e.target.value)}
+          />
+          <button
+            type="submit"
+            onClick={(e) => handleSave(e)}
+            className="JoinRoom-card-button"
+          >
+            Save
+          </button> */}
+          {error && <p>Please enter a room code to create a room</p>}
+        </form>
+        <Box display="flex" alignItems="center" justifyContent="center">
+          {rooms.map((room) => {
+            return (
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                id={room}
+                onClick={(e) => {
+                  handleRoomClick(e);
+                }}
+              >
+                Join Room {room}
+              </Button>
+            );
+          })}
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Button
+            spacing={5}
+            size="xsm"
+            colorScheme="teal"
+            variant="solid"
+            onClick={handleRefresh}
+          >
+            Refresh Rooms
+          </Button>
+        </Box>
       </div>
-    </div>
+    </ChakraProvider>
   );
 };
 

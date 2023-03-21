@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./header.css";
+import "./Header.css";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <header>
-      <h1 className="header-title">Connect4 To Be</h1>
+      <h1 className="header-title">Tic-Tac-Toe</h1>
       <button type="button" onClick={handleHome}>
         Home
       </button>
