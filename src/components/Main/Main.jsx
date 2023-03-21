@@ -69,8 +69,6 @@ const Main = ({ socket, roomCode, username }) => {
   return (
     <main>
       <div>
-        {lose && <h1>YOU LOSE!!!!</h1>}
-        {win && <h1>YOU WIN!!!!</h1>}
         {roomCode !== null && (
           <>
             <Chat roomCode={roomCode} username={username} socket={socket} />
@@ -80,6 +78,9 @@ const Main = ({ socket, roomCode, username }) => {
           </>
         )}
       </div>
+      {canPlay && <h1>MAKE A MOVE!</h1>}
+      {lose && <h1>YOU LOSE!!!!</h1>}
+      {win && <h1>YOU WIN!!!!</h1>}
       <section className="main-section">
         {/* Column1 */}
         <Cell
