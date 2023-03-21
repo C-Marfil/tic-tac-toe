@@ -11,8 +11,8 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Flex,
-  Stack,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
@@ -80,10 +80,10 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
       <div>
         <form>
           <h1 className="JoinRoom-card-title">Enter a room code</h1>
-          <button type="button" onClick={handleRefresh}>
+          {/* <button type="button" onClick={handleRefresh}>
             Refresh Rooms
-          </button>
-          <Flex justify="center">
+          </button> */}
+          <Flex display="flex" alignItems="center" justifyContent="center">
             <NumberInput
               className="NumberInput"
               min={1}
@@ -93,6 +93,7 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
             >
               <NumberInputField
                 value={roomCodeInput}
+                placeholder="eg: 14"
                 onChange={(e) => setRoomCodeInput(e.target.value)}
               />
               <NumberInputStepper>
@@ -100,16 +101,14 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <Stack direction="row" spacing={4} align="center">
-              <Button
-                colorScheme="teal"
-                variant="solid"
-                type="submit"
-                onClick={(e) => handleSave(e)}
-              >
-                Save
-              </Button>
-            </Stack>
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              type="submit"
+              onClick={(e) => handleSave(e)}
+            >
+              Save
+            </Button>
           </Flex>
           {/* <input
             className="roomcode-input"
@@ -128,21 +127,33 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
           </button> */}
           {error && <p>Please enter a room code to create a room</p>}
         </form>
-        <div>
+        <Box display="flex" alignItems="center" justifyContent="center">
           {rooms.map((room) => {
             return (
-              <button
-                type="button"
+              <Button
+                colorScheme="teal"
+                variant="solid"
                 id={room}
                 onClick={(e) => {
                   handleRoomClick(e);
                 }}
               >
-                Join room {room}
-              </button>
+                Join Room {room}
+              </Button>
             );
           })}
-        </div>
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Button
+            spacing={5}
+            size="xsm"
+            colorScheme="teal"
+            variant="solid"
+            onClick={handleRefresh}
+          >
+            Refresh Rooms
+          </Button>
+        </Box>
       </div>
     </ChakraProvider>
   );
