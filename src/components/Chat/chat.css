@@ -20,7 +20,6 @@ justify-content: center;
 align-items: center;
 flex-flow: column wrap;
 padding-top: 65px;
-border: 1px black solid;
 }
 
 .joinChatContainer h3 {

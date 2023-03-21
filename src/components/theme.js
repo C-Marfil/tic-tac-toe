@@ -6,6 +6,7 @@ const theme = extendTheme({
       body: {
         bg: "",
         fontFamily: "",
+        backGroundImage: "",
       },
     }),
   },
