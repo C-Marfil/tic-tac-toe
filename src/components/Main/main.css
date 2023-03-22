@@ -1,4 +1,10 @@
 main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.main-grid-container {
   display: grid;
   place-content: center;
 }

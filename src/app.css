@@ -1,0 +1,6 @@
+.bg {
+    background-image: url(src/images/playful.jpg);
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+  }

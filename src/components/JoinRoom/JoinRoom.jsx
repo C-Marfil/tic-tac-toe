@@ -3,14 +3,7 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Button,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import "./JoinRoom.css";
 
@@ -74,39 +67,29 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   }, [roomCode]);
 
   return (
-    <div className="main-join-room">
+    <div className="joinRoomContainer">
       <h1 className="JoinRoom-card-title">Enter a room code</h1>
-      <div className="red">
+      <div>
         {/* <button type="button" onClick={handleRefresh}>
             Refresh Rooms
           </button> */}
         <form>
-          <NumberInput
-            className="NumberInput"
-            min={1}
-            max={99}
-            width="auto"
-            size="md"
-          >
-            <NumberInputField
-              value={roomCodeInput}
-              placeholder="eg: 14"
-              onChange={(e) => setRoomCodeInput(e.target.value)}
-            />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <input
+            type="text"
+            aria-label="username-input"
+            placeholder="eg: 14"
+            value={roomCodeInput}
+            onChange={(e) => setRoomCodeInput(e.target.value)}
+          />
         </form>
         <Button
+          colorScheme="brand"
           className="saveButton"
-          colorScheme="teal"
           variant="solid"
           type="submit"
           onClick={(e) => handleSave(e)}
         >
-          Save
+          Save & Join
         </Button>
         {/* <input
             className="roomcode-input"
@@ -128,7 +111,7 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
       {rooms.map((room) => {
         return (
           <Button
-            colorScheme="teal"
+            colorScheme="brand"
             variant="solid"
             id={room}
             onClick={(e) => {
@@ -141,7 +124,7 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
       })}
       <Button
         className="refresh-button"
-        colorScheme="teal"
+        colorScheme="brand"
         variant="solid"
         onClick={handleRefresh}
       >

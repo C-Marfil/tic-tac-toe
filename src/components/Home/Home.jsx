@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 import "../Chat/chat.css";
 import "./home.css";
-import { Button } from "@chakra-ui/react";
 
 const Home = ({ setUsername, username }) => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Home = ({ setUsername, username }) => {
           }}
         />
         <Button
-          colorScheme="whatsapp"
+          colorScheme="brand"
           type="button"
           onClick={() => {
             if (username) {
