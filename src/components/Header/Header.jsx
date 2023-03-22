@@ -13,7 +13,12 @@ const Header = () => {
   return (
     <header>
       <h1 className="header-title">Tic-Tac-Toe</h1>
-      <Button type="button" onClick={handleHome}>
+      <Button
+        className="home-button"
+        colorScheme="brand"
+        variant="solid"
+        onClick={handleHome}
+      >
         Home
       </Button>
     </header>

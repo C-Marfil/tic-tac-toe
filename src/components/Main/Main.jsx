@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import Cell from "../Cell/Cell";
 import winning from "./forLoopWin";
@@ -72,9 +73,15 @@ const Main = ({ socket, roomCode, username }) => {
         {roomCode !== null && (
           <>
             <Chat roomCode={roomCode} username={username} socket={socket} />
-            <button type="button" onClick={handleLeave}>
+            <Button
+              className="leaveButton"
+              colorScheme="brand"
+              variant="solid"
+              type="button"
+              onClick={handleLeave}
+            >
               Leave Room
-            </button>
+            </Button>
           </>
         )}
       </div>

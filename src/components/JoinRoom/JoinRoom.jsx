@@ -68,7 +68,7 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
 
   return (
     <div className="joinRoomContainer">
-      <h1 className="JoinRoom-card-title">Enter a room code</h1>
+      <h1 className="joinRoomCardTitle">Enter a room code</h1>
       <div>
         {/* <button type="button" onClick={handleRefresh}>
             Refresh Rooms
@@ -106,7 +106,6 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
             >
             Save
           </button> */}
-        {error && <p>Please enter a room code to create a room</p>}
       </div>
       {rooms.map((room) => {
         return (
@@ -130,6 +129,9 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
       >
         Refresh Rooms
       </Button>
+      {error && (
+        <p className="roomError">Please enter a room code to create a room</p>
+      )}
     </div>
   );
 };

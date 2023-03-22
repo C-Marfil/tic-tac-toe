@@ -4,6 +4,7 @@
   margin: 0;
 }
 
+
 .joinRoomContainer {
   display: flex;
   flex-direction: row;
@@ -39,12 +40,18 @@
   cursor: pointer;
 }
 
+
 .joinRoomContainer button:hover {
 background: #FF6700;
 }
 
 .joinRoomContainer input:focus {
   outline-color: #FF6700;;
+}
+
+.roomError {
+  font-size: 20px;
+  color: #ffff;
 }
 
 /* .main-join-room{

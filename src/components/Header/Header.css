@@ -1,5 +1,26 @@
+h1 {
+  color: #ffff;
+}
+
 .header-title {
     text-align: center;
     color: #ffff;
     font-size: 50px;
   }
+
+.home-button {
+  position: absolute;
+  margin-left: 7px;
+  margin-bottom: 50px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  border-color: 2px solid #FF6700;
+  cursor: pointer;
+}
+
+.home-button:hover {
+  background: #FF6700;
+  }
+  
