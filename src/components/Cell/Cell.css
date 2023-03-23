@@ -4,9 +4,10 @@
   background: var(--primary-color);
   color: var(--secondary-color);
   padding-top: 5px;
-  font-size: 4.9rem;
+  font-size: 5rem;
   display: grid;
   place-content: center;
+  margin-right: 5px;
 }
 
 .cell:hover {

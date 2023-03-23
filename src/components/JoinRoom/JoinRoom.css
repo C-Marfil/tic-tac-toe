@@ -4,6 +4,81 @@
   margin: 0;
 }
 
+
+.joinRoomContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  padding-top: 65px;
+  }
+
+.joinRoomContainer h3 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  }
+  .joinRoomContainer input {
+  width: 210px;
+  height: 40px;
+  margin: 7px;
+  border: 2px solid #3E92CC;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  }
+  
+  .joinRoomContainer button {
+  width: 225px;
+  height: 50px;
+  margin: 7px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  border-color: 2px solid #FF6700;
+  cursor: pointer;
+}
+
+
+.joinRoomContainer button:hover {
+background: #FF6700;
+}
+
+.joinRoomContainer input:focus {
+  outline-color: #FF6700;;
+}
+
+.roomError {
+  font-size: 20px;
+  color: #ffff;
+}
+
+/* .main-join-room{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.red {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.refresh-button {
+  font-size: 20px;
+  color: black;
+  background-color: black;
+} */
+
+/* .saveButton {
+  display: flex;
+  flex-direction: row;
+  border: black solid 1px;
+} */
 /* .joinRoomModal-container {
     height: 100%;
     width: 100%;

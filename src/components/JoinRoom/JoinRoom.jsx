@@ -3,18 +3,9 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  ChakraProvider,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Flex,
-  Button,
-  Box,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import "./JoinRoom.css";
 
 const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   const [roomCodeInput, setRoomCodeInput] = useState(null);
@@ -76,86 +67,72 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
   }, [roomCode]);
 
   return (
-    <ChakraProvider>
+    <div className="joinRoomContainer">
+      <h1 className="joinRoomCardTitle">Enter a room code</h1>
       <div>
-        <form>
-          <h1 className="JoinRoom-card-title">Enter a room code</h1>
-          {/* <button type="button" onClick={handleRefresh}>
+        {/* <button type="button" onClick={handleRefresh}>
             Refresh Rooms
           </button> */}
-          <Flex display="flex" alignItems="center" justifyContent="center">
-            <NumberInput
-              className="NumberInput"
-              min={1}
-              max={99}
-              width="auto"
-              size="md"
-            >
-              <NumberInputField
-                value={roomCodeInput}
-                placeholder="eg: 14"
-                onChange={(e) => setRoomCodeInput(e.target.value)}
-              />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-            <Button
-              colorScheme="teal"
-              variant="solid"
-              type="submit"
-              onClick={(e) => handleSave(e)}
-            >
-              Save
-            </Button>
-          </Flex>
-          {/* <input
+        <form>
+          <input
+            type="text"
+            aria-label="username-input"
+            placeholder="eg: 14"
+            value={roomCodeInput}
+            onChange={(e) => setRoomCodeInput(e.target.value)}
+          />
+        </form>
+        <Button
+          colorScheme="brand"
+          className="saveButton"
+          variant="solid"
+          type="submit"
+          onClick={(e) => handleSave(e)}
+        >
+          Save & Join
+        </Button>
+        {/* <input
             className="roomcode-input"
             aria-label="roomcode-input"
             type="number"
             value={roomCodeInput}
             placeholder="eg: 1212"
             onChange={(e) => setRoomCodeInput(e.target.value)}
-          />
-          <button
+            />
+            <button
             type="submit"
             onClick={(e) => handleSave(e)}
             className="JoinRoom-card-button"
-          >
+            >
             Save
           </button> */}
-          {error && <p>Please enter a room code to create a room</p>}
-        </form>
-        <Box display="flex" alignItems="center" justifyContent="center">
-          {rooms.map((room) => {
-            return (
-              <Button
-                colorScheme="teal"
-                variant="solid"
-                id={room}
-                onClick={(e) => {
-                  handleRoomClick(e);
-                }}
-              >
-                Join Room {room}
-              </Button>
-            );
-          })}
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="center">
-          <Button
-            spacing={5}
-            size="xsm"
-            colorScheme="teal"
-            variant="solid"
-            onClick={handleRefresh}
-          >
-            Refresh Rooms
-          </Button>
-        </Box>
       </div>
-    </ChakraProvider>
+      {rooms.map((room) => {
+        return (
+          <Button
+            colorScheme="brand"
+            variant="solid"
+            id={room}
+            onClick={(e) => {
+              handleRoomClick(e);
+            }}
+          >
+            Join Room {room}
+          </Button>
+        );
+      })}
+      <Button
+        className="refresh-button"
+        colorScheme="brand"
+        variant="solid"
+        onClick={handleRefresh}
+      >
+        Refresh Rooms
+      </Button>
+      {error && (
+        <p className="roomError">Please enter a room code to create a room</p>
+      )}
+    </div>
   );
 };
 

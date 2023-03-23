@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import io from "socket.io-client";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./theme";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Home from "./Home/Home";
@@ -27,43 +29,45 @@ const App = () => {
   }, [roomCode, username]);
 
   return (
-    <div>
-      <Header roomCode={roomCode} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              socket={socket}
-              setUsername={setUsername}
-              username={username}
-            />
-          }
-        />
-        <Route
-          path="/lobby"
-          element={
-            <JoinRoom
-              socket={socket}
-              roomCode={roomCode}
-              username={username}
-              setRoomCode={setRoomCode}
-            />
-          }
-        />
-        <Route
-          path={`/room${roomCode}`}
-          element={
-            <Main
-              username={username}
-              setUsername={setUsername}
-              socket={socket}
-              roomCode={roomCode}
-            />
-          }
-        />
-      </Routes>
-    </div>
+    <ChakraProvider theme={theme} resetCSS={false}>
+      <div>
+        <Header roomCode={roomCode} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                socket={socket}
+                setUsername={setUsername}
+                username={username}
+              />
+            }
+          />
+          <Route
+            path="/lobby"
+            element={
+              <JoinRoom
+                socket={socket}
+                roomCode={roomCode}
+                username={username}
+                setRoomCode={setRoomCode}
+              />
+            }
+          />
+          <Route
+            path={`/room${roomCode}`}
+            element={
+              <Main
+                username={username}
+                setUsername={setUsername}
+                socket={socket}
+                roomCode={roomCode}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </ChakraProvider>
   );
 };
 

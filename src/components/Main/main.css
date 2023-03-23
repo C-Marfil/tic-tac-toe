@@ -1,6 +1,10 @@
-
-
 main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.main-grid-container {
   display: grid;
   place-content: center;
 }
@@ -24,3 +28,15 @@ main {
   border: 1px black solid;
   border-radius: 50%;
 }
+
+.leaveButton {
+  display: block;
+  position: inherit;
+  border: none;
+  border-color: 2px solid #FF6700;
+  cursor: pointer;
+}
+
+.leaveButton:hover {
+  background: #FF6700;
+  }

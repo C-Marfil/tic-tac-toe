@@ -1,12 +1,12 @@
-.App {
+/* .App {
 width: 100vw;
 height: 100vh;
-background: #fff;
+background: #3e92cc;
 color: #212121;
 font-family: "Open Sans", sans-serif;
 display: grid;
 place-items: center;
-}
+} */
 body {
 margin: 0%;
 padding: 0%;
@@ -15,8 +15,11 @@ padding: 0%;
 
 .joinChatContainer {
 display: flex;
-flex-direction: column;
-text-align: center;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+flex-flow: column wrap;
+padding-top: 65px;
 }
 
 .joinChatContainer h3 {
@@ -27,10 +30,14 @@ margin-bottom: 1rem;
 width: 210px;
 height: 40px;
 margin: 7px;
-border: 2px solid #43a047;
+border: 2px solid #3E92CC;
 border-radius: 5px;
 padding: 5px;
 font-size: 16px;
+}
+
+.joinChatContainer input:focus {
+    outline-color: #FF6700;
 }
 
 .joinChatContainer button {
@@ -41,13 +48,13 @@ border: none;
 border-radius: 5px;
 padding: 5px;
 font-size: 16px;
-background: #43a047;
 color: #fff;
 cursor: pointer;
+border-color: 2px solid #FF6700;
 }
 
 .joinChatContainer button:hover {
-background: #2e7d32;
+background: #FF6700;
 }
 
 .chat-window {
@@ -63,7 +70,6 @@ height: 45px;
 border-radius: 6px;
 background: #263238;
 position: relative;
-cursor: pointer;
 }
 .chat-window .chat-header p {
 display: block;
@@ -142,7 +148,7 @@ margin-right: 5px;
 }
 
 .message-meta #author {
-margin-left: 10px;
+margin-left: 1px;
 font-weight: bold;
 }
 
@@ -180,11 +186,11 @@ height: 100%;
 background: transparent;
 outline: none;
 font-size: 25px;
-color: lightgray;
+color: #3E92CC;
 }
 
 .chat-window .chat-footer button:hover {
-color: #43a047;
+color: #FF6700;
 }
 .hide {
 opacity: 0 !important;

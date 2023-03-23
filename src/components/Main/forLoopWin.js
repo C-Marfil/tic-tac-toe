@@ -10,7 +10,7 @@ const winning = (board) => {
       if (index === 1) {
         for (let cell = 0; cell <= 5; cell += 1) {
           console.log("this is cell", cell);
-      console.log("this is cell path", arrayBoard[col][index][cell]);
+          console.log("this is cell path", arrayBoard[col][index][cell]);
           if (
             arrayBoard[col][index][cell] !== "" &&
             arrayBoard[col][index][cell] === arrayBoard[col][index][cell + 1] &&
