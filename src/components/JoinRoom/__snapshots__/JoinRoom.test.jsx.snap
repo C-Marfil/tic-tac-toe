@@ -2,33 +2,37 @@
 
 exports[`JoinRoom, children and Routing render/work properly Snapshot test 1`] = `
 <DocumentFragment>
-  <div>
-    <form>
-      <h1
-        class="JoinRoom-card-title"
-      >
-        Enter a room code
-      </h1>
+  <div
+    class="joinRoomContainer"
+  >
+    <h1
+      class="joinRoomCardTitle"
+    >
+      Enter a room code
+    </h1>
+    <div>
+      <form>
+        <input
+          aria-label="roomcode-input"
+          class="roomcode--input"
+          placeholder="eg: 14"
+          type="text"
+          value=""
+        />
+      </form>
       <button
+        class="chakra-button saveButton css-4xx2wk"
+        type="submit"
+      >
+        Save & Join
+      </button>
+      <button
+        class="chakra-button refresh-button css-4xx2wk"
         type="button"
       >
         Refresh Rooms
       </button>
-      <input
-        aria-label="roomcode-input"
-        class="roomcode-input"
-        placeholder="eg: 1212"
-        type="number"
-        value=""
-      />
-      <button
-        class="JoinRoom-card-button"
-        type="submit"
-      >
-        Save
-      </button>
-    </form>
-    <div />
+    </div>
   </div>
 </DocumentFragment>
 `;

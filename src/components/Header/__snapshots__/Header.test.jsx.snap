@@ -3,16 +3,11 @@
 exports[`Header Component, children and Routing render/work properly Snapshot test 1`] = `
 <DocumentFragment>
   <header>
-    <h1
-      class="header-title"
-    >
-      Connect4 To Be
-    </h1>
-    <button
-      type="button"
-    >
-      Home
-    </button>
+    <img
+      alt="logo"
+      class="logo"
+      src="logo.png"
+    />
   </header>
 </DocumentFragment>
 `;

@@ -10,7 +10,7 @@ h1 {
 
 .home-button {
   position: absolute;
-  margin-left: 7px;
+  left: 300px;
   margin-bottom: 50px;
   border: none;
   border-radius: 5px;
@@ -18,6 +18,12 @@ h1 {
   font-size: 16px;
   border-color: 2px solid #FF6700;
   cursor: pointer;
+}
+
+.logo {
+position: absolute;
+top: 5vh;
+left: 25vw;
 }
 
 .home-button:hover {

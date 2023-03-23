@@ -16,9 +16,8 @@ const Home = ({ setUsername, username }) => {
   };
 
   return (
-    <div>
+    <div className="home">
       <div className="joinChatContainer">
-        <h3>Hi :3</h3>
         <input
           type="text"
           aria-label="username-input"

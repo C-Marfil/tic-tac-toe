@@ -2,22 +2,22 @@
 
 exports[`Home Component, children and Routing render/work properly Snapshot test 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    class="home"
+  >
     <div
       class="joinChatContainer"
     >
-      <h3>
-        Join the Conversation
-      </h3>
       <input
         aria-label="username-input"
-        placeholder="Username..."
+        placeholder="Enter your name"
         type="text"
       />
       <button
+        class="chakra-button css-4xx2wk"
         type="button"
       >
-        👍
+        PLAY!
       </button>
     </div>
   </div>

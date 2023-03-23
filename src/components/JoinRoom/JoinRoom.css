@@ -1,34 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
 .ChakraProvider {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Odibee Sans', cursive;
   margin: 0;
 }
 
-
 .joinRoomContainer {
+  margin-top: 135px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-flow: column wrap;
   padding-top: 65px;
-  }
+  font-family: 'Odibee Sans', cursive;
+}
 
 .joinRoomContainer h3 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  }
-  .joinRoomContainer input {
+  font-family: 'Odibee Sans', cursive;
+}
+
+.joinRoomContainer input {
   width: 210px;
   height: 40px;
   margin: 7px;
-  border: 2px solid #3E92CC;
+  border: 2px solid #3e92cc;
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
-  }
-  
-  .joinRoomContainer button {
+}
+
+.joinRoomContainer button {
   width: 225px;
   height: 50px;
   margin: 7px;
@@ -36,17 +39,16 @@
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
-  border-color: 2px solid #FF6700;
+  border-color: 2px solid #ff6700;
   cursor: pointer;
 }
 
-
 .joinRoomContainer button:hover {
-background: #FF6700;
+  background: #ff6700;
 }
 
 .joinRoomContainer input:focus {
-  outline-color: #FF6700;;
+  outline-color: #ff6700;
 }
 
 .roomError {

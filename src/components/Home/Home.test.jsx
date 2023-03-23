@@ -53,7 +53,7 @@ describe("Home Component, children and Routing render/work properly", () => {
       { wrapper: BrowserRouter }
     );
 
-    expect(screen.getByText(/Join the Conversation/i).toBeInTheDocument);
+    expect(screen.getByText(/PLAY!/i).toBeInTheDocument);
   });
 
   it("tests button and error message rendering", () => {
@@ -64,7 +64,7 @@ describe("Home Component, children and Routing render/work properly", () => {
       />,
       { wrapper: BrowserRouter }
     );
-    userEvent.click(screen.getByText(/👍/i));
+    userEvent.click(screen.getByText(/PLAY!/i));
     expect(
       screen.getByText(/Please enter your username before proceeding/i)
     ).toBeInTheDocument();

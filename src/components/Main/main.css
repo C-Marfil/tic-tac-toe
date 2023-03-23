@@ -1,12 +1,23 @@
 main {
+  margin-top: 150px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
+  font-family: 'Odibee Sans', cursive;
 }
 
 .main-grid-container {
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  scale: 80%;
   place-content: center;
+}
+
+.alert {
+  align-self: center;
+  background-color: crimson;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .main-section {
@@ -15,26 +26,26 @@ main {
   grid-template-rows: repeat(7, 1fr);
   grid-template-columns: repeat(6, 1fr);
   gap: 0.6rem;
-  border: 1px black solid;
-  background-color: blue;
+  border: 1px rgb(239, 104, 8) solid;
+  background-color: rgb(51, 121, 233);
   padding-right: 50px;
   padding-left: 50px;
-  padding-top: 15px;
+  padding-top: 0px;
   padding-bottom: 10px;
 }
 
 .cell {
   background-color: white;
-  border: 1px black solid;
+  border: 1px rgb(255, 151, 5) solid;
   border-radius: 50%;
 }
 
 .leaveButton {
   display: block;
-  position: inherit;
-  border: none;
+  border: solid orange 2px;
   border-color: 2px solid #FF6700;
   cursor: pointer;
+  margin-bottom: -30px;
 }
 
 .leaveButton:hover {

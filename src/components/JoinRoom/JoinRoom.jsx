@@ -75,8 +75,9 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
           </button> */}
         <form>
           <input
+            className="roomcode--input"
             type="text"
-            aria-label="username-input"
+            aria-label="roomcode-input"
             placeholder="eg: 14"
             value={roomCodeInput}
             onChange={(e) => setRoomCodeInput(e.target.value)}
@@ -90,6 +91,14 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
           onClick={(e) => handleSave(e)}
         >
           Save & Join
+        </Button>
+        <Button
+          className="refresh-button"
+          colorScheme="brand"
+          variant="solid"
+          onClick={handleRefresh}
+        >
+          Refresh Rooms
         </Button>
         {/* <input
             className="roomcode-input"
@@ -121,14 +130,6 @@ const JoinRoom = ({ setRoomCode, socket, roomCode }) => {
           </Button>
         );
       })}
-      <Button
-        className="refresh-button"
-        colorScheme="brand"
-        variant="solid"
-        onClick={handleRefresh}
-      >
-        Refresh Rooms
-      </Button>
       {error && (
         <p className="roomError">Please enter a room code to create a room</p>
       )}

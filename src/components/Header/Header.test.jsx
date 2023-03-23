@@ -30,7 +30,7 @@ describe("Header Component, children and Routing render/work properly", () => {
       { wrapper: BrowserRouter }
     );
 
-    expect(screen.getByText(/Connect4 To Be/i).toBeInTheDocument);
+    expect(screen.getByAltText(/logo/i).toBeInTheDocument);
   });
 
   it("Tests the navigation works", () => {
@@ -44,6 +44,6 @@ describe("Header Component, children and Routing render/work properly", () => {
         />
       </MemoryRouter>
     );
-    expect(screen.getByText(/Connect4 To Be/i).toBeInTheDocument);
+    expect(screen.getByAltText(/logo/i).toBeInTheDocument);
   });
 });

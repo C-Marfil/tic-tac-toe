@@ -7,8 +7,8 @@ import theme from "./theme";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Home from "./Home/Home";
-// import Footer from "./Footer/Footer";
 import JoinRoom from "./JoinRoom/JoinRoom";
+import "../styles/app.css";
 
 const socket = io.connect("http://localhost:5000");
 
@@ -30,8 +30,8 @@ const App = () => {
 
   return (
     <ChakraProvider theme={theme} resetCSS={false}>
-      <div>
-        <Header roomCode={roomCode} />
+      <div className="app">
+        <Header username={username} roomcode={roomCode} />
         <Routes>
           <Route
             path="/"

@@ -1,15 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Odibee Sans', cursive;
   margin: 0;
-  background-color: #0A2463
+  background: rgb(195,34,34);
+  background: linear-gradient(0deg, rgb(233, 115, 73) 12%, rgb(236, 92, 44) 41%, rgb(245, 149, 66) 53%, rgb(241, 131, 14) 59%);    
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Odibee Sans', cursive;
 } 

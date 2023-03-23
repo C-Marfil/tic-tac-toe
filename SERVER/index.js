@@ -4,7 +4,7 @@ const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 
-const rawRooms = [];
+let rawRooms = [];
 let users = 0;
 
 io.on("connection", (socket) => {
@@ -77,6 +77,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     socket.emit("clean");
+    rawRooms = [];
     console.log("User Disconnected");
   });
 });
