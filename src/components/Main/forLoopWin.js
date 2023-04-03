@@ -2,15 +2,9 @@ const winning = (board) => {
   const arrayBoard = Object.entries(board);
 
   for (let col = 0; col <= 6; col += 1) {
-    console.log("this is col", col);
-    console.log("this is col path", arrayBoard[col]);
     for (let index = 0; index <= 1; index += 1) {
-      console.log("this is index", index);
-      console.log("this is index path", arrayBoard[col][index]);
       if (index === 1) {
-        for (let cell = 0; cell <= 5; cell += 1) {
-          console.log("this is cell", cell);
-          console.log("this is cell path", arrayBoard[col][index][cell]);
+        for (let cell = 0; cell <= 5; cell += 1) 
           if (
             arrayBoard[col][index][cell] !== "" &&
             arrayBoard[col][index][cell] === arrayBoard[col][index][cell + 1] &&

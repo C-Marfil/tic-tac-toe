@@ -21,7 +21,6 @@ io.on("connection", (socket) => {
     console.log('this is id in server', id);
    
       updatedBoard[column][position] === "🟡";
-   
 
     socket.broadcast.to(roomCode).emit("updateGame", updatedBoard, column, position);
   });
